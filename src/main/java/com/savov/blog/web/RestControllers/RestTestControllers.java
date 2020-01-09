@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpSession;
 
 @RestController
-public class TestControllers {
+public class RestTestControllers {
 
     @Autowired
     private PostRepository postRepository;

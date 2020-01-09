@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/posts/{postId}")
-public class ReactionController {
+public class RestReactionController {
 
     private final ReactionService reactionService;
 
     @Autowired
-    public ReactionController(ReactionService reactionService) {
+    public RestReactionController(ReactionService reactionService) {
         this.reactionService = reactionService;
     }
 

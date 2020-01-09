@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/posts/{postId}/comments")
-public class CommentController {
+public class RestCommentController {
 
     private final CommentService commentService;
 
     @Autowired
-    public CommentController(CommentService commentService) {
+    public RestCommentController(CommentService commentService) {
 
         this.commentService = commentService;
     }
