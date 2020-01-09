@@ -66,7 +66,15 @@ public class UserController {
 
         return modelAndView;
     }
-
-
+    @GetMapping("/profile")
+    public ModelAndView myProfile(ModelAndView modelAndView,HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            modelAndView.addObject("user", userService.getUserByUsername((String) session.getAttribute("username")));
+            modelAndView.setViewName("profile");
+        } else {
+            modelAndView.setViewName("redirect:/login");
+        }
+        return modelAndView;
+    }
 
 }

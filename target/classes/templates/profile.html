@@ -8,27 +8,92 @@
     <main class="mt-3">
         <hr class="bg->blog hr-2"/>
         <div class="print-container container-fluid">
+
+
+            <div class="form-group">
+                <div class="label-center d-flex justify-content-center">
+                    <label for="firstName" class="text-blog h3">Firs Name</label>
+                </div>
+                <input type="text" class="form-control" id="firstName" name="firstName" th:value="${user.firstName}"
+                       disabled/>
+            </div>
+            <div class="form-group">
+                <div class="label-center d-flex justify-content-center">
+                    <label for="lastName" class="text-blog h3">Last name</label>
+                </div>
+                <input type="text" class="form-control" id="lastName" placeholder="LastName..." name="lastName"
+                       th:value="${user.lastName}" disabled/>
+            </div>
+            <div class="form-group">
+                <div class="label-center d-flex justify-content-center">
+                    <label for="username" class="text-blog h3">Username</label>
+                </div>
+                <input type="text" class="form-control" id="username" placeholder="Username..." name="username"
+                       th:value="${user.username}" disabled/>
+            </div>
+
+            <div class="form-group">
+                <div class="label-center d-flex justify-content-center">
+                    <label for="email" class="text-blog h3">Email</label>
+                </div>
+                <input type="text" class="form-control" id="email" placeholder="Email..." name="email"
+                       th:value="${user.Email}" disabled/>
+            </div>
+            <div class="form-group">
+                <div class="label-center d-flex justify-content-center">
+                    <label for="address" class="text-blog h3">Address</label>
+                </div>
+                <input type="address" class="form-control" id="address" placeholder="Address..." name="address"
+                       th:value="${user.address}" disabled/>
+            </div>
+            <hr class="bg-blog hr-2"/>
+
+            <div class="label-center d-flex justify-content-center">
+                <a class="text-blog h3" th:href="@{/myposts}">My Posts</a>
+            </div>
+            <hr class="bg->blog hr-2"/>
             <div class="row mb-4 d-flex flex-wrap">
-                <th:block th:each="document:${documents}">
+                <th:block th:each="post:${user.posts}">
                     <div class="print-scheduled home-doc bg-blog rounded">
-                        <h5 class="text-center text-white font-weight-bold py-3 mt-3" th:text="${document.title}"></h5>
+                        <h5 class="text-center text-white font-weight-bold py-3 mt-3" th:text="${post.title}"></h5>
                         <hr class="bg-white">
                         <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
-                            <a th:href="@{/print/{id}(id=${document.id})}"
+                            <a th:href="@{/print/{id}(id=${post.id})}"
                                class="btn bg-blog text-white font-weight-bold mb-3">Read Post</a>
-                            <a th:href="@{/delete/{id}(id=${document.id})}"
+                            <a th:href="@{/delete/{id}(id=${post.id})}"
                                class="btn bg-blog text-white font-weight-bold mb-3">Delete Post</a>
-                            <a th:href="@{/update/{id}(id=${document.id})}"
+                            <a th:href="@{/update/{id}(id=${post.id})}"
                                class="btn bg-blog text-white font-weight-bold mb-3">Update Post</a>
 
                         </div>
                     </div>
                 </th:block>
+                <hr class="bg-blog hr-2"/>
+            </div>
+            <hr class="bg-blog hr-2"/>
+
+            <div class="label-center d-flex justify-content-center">
+                <a class="text-blog h3" th:href="@{/mycomments}">My Comments</a>
+            </div>
+            <hr class="bg->blog hr-2"/>
+            <div class="row mb-4 d-flex flex-wrap">
+                <th:block th:each="comment:${user.comments}">
+                    <div class="print-scheduled home-doc bg-blog rounded">
+                        <h5 class="text-center text-white font-weight-bold py-3 mt-3"
+                            th:text="${comment.post.title}"></h5>
+                        <hr class="bg-white">
+                        <h5 class="text-center text-white font-weight-bold py-3 mt-3" th:text="${comment.body}"></h5>
+                        <hr class="bg-white">
+                        <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
+                        </div>
+                    </div>
+                </th:block>
             </div>
         </div>
-        <hr class="bg-blog hr-2 mt-5"/>
-    </main>
-    <th:block th:replace="fragments/footer"></th:block>
+</div>
+<hr class="bg-blog hr-2 mt-5"/>
+</main>
+<th:block th:replace="fragments/footer"></th:block>
 </div>
 </body>
 </html>

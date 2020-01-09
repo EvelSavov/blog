@@ -63,6 +63,12 @@ public class CommentServiceImpl implements CommentService {
 
         return comment;
     }
+
+    @Override
+    public List<Comment> getCommentsByUserId(Long userId) {
+
+        return  commentRepository.findByUserId(userId);
+    }
 }
 
 

@@ -43,11 +43,11 @@ public class PostController {
 
     }
 
-    @GetMapping("/profile")
-    public ModelAndView myProfile(ModelAndView modelAndView,HttpSession session) {
+    @GetMapping("/myposts")
+    public ModelAndView myPosts(ModelAndView modelAndView,HttpSession session) {
         if(session.getAttribute("username")!=null) {
             modelAndView.addObject("documents",postService.getPostByUserId((Long) session.getAttribute("id")));
-            modelAndView.setViewName("profile");
+            modelAndView.setViewName("myposts");
         }else{
             modelAndView.setViewName("redirect:/login");
         }
