@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head"></th:block>
+<body>
+<div class="container-fluid">
+    <th:block th:replace="fragments/navbar"></th:block>
+    <main class="mt-3">
+        <form class="mx-auto w-75" th:method="post" th:action="@{/update/{id}(id=${post.id})}">
+            <div class="form-group">
+                <div class="label-center d-flex justify-content-center">
+                    <label for="title" class="text-blog h3">Title</label>
+                </div>
+                <input type="text" class="form-control" id="title" th:value="${post.title}" name="title"
+                />
+            </div>
+            <div class="form-group">
+                <div class="label-center d-flex justify-content-center">
+                    <label for="body" class="text-blog h3">Content</label>
+                </div>
+                <textarea class="form-control" id="body" name="body" rows="10" th:text="${post.body}"></textarea>
+            </div>
+            <hr class="bg-blog hr-2"/>
+            <div class="form-group">
+                <div class="label-center d-flex justify-content-center">
+                    <label for="category" class="text-blog h3">Category</label>
+                </div>
+                <input type="number" class="form-control" id="category" th:value="${post.category.id}" name="category"/>
+            </div>
+
+            <hr class="bg-blog hr-2"/>
+<!--            <div class="form-group">-->
+<!--                <div class="label-center d-flex justify-content-center">-->
+<!--                    <label for="user" class="text-blog h3">User Id</label>-->
+<!--                </div>-->
+<!--                <input type="number" class="form-control" id="user" placeholder="user..." th:value="${session.id}" name="user"  />-->
+<!--            </div>-->
+
+            <div class="button-holder d-flex justify-content-center">
+                <button type="submit" class="btn bg-blog text-white">Update</button>
+            </div>
+            <hr class="bg-blog hr-2"/>
+        </form>
+
+
+    </main>
+    <th:block th:replace="fragments/footer"></th:block>
+</div>
+</body>
+</html>
