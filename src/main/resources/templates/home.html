@@ -9,17 +9,29 @@
         <hr class="bg->blog hr-2"/>
         <div class="print-container container-fluid">
             <div class="row mb-4 d-flex flex-wrap">
-                <th:block th:each="document:${documents}">
-                    <div class="print-scheduled home-doc bg-blog rounded">
-                        <h5 class="text-center text-white font-weight-bold py-3 mt-3" th:text="${document.title}"></h5>
-                        <hr class="bg-white">
-                        <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
-                            <a th:href="@{/print/{id}(id=${document.id})}"
-                               class="btn bg-blog text-white font-weight-bold mb-3">Read Post</a>
 
-                        </div>
+                <div class="print-scheduled home-doc bg-blog rounded">
+                    <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
+                        <a th:href="@{/registration}"
+                           class="btn bg-blog text-white font-weight-bold mb-3">Register</a>
                     </div>
-                </th:block>
+                </div>
+
+                <div class="print-scheduled home-doc bg-blog rounded">
+                    <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
+                        <a th:href="@{/login}"
+                           class="btn bg-blog text-white font-weight-bold mb-3">Login</a>
+
+                    </div>
+                </div>
+
+                <div class="print-scheduled home-doc bg-blog rounded">
+                    <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
+                        <a th:href="@{/allpost}"
+                           class="btn bg-blog text-white font-weight-bold mb-3">All Post</a>
+                    </div>
+                </div>
+
             </div>
         </div>
         <hr class="bg-blog hr-2 mt-5"/>

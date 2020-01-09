@@ -50,7 +50,7 @@
                    th:value="${post.dislikeCount}" disabled/>
         </div>
 
-        <th:block th:each="comment:${comments}">
+        <th:block th:each="comment:${post.comments}">
             <div class="print-scheduled home-doc bg-blog rounded">
                 <h5 class="text-center text-white font-weight-bold py-3 mt-3" th:text="${comment.body}"></h5>
 

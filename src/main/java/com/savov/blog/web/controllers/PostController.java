@@ -16,20 +16,25 @@ import javax.servlet.http.HttpSession;
 public class PostController {
 
     private final PostService postService;
-    private final CommentService commentService;
 
 
-    public PostController(PostService postService, CommentService commentService) {
+    public PostController(PostService postService) {
         this.postService = postService;
-
-        this.commentService = commentService;
     }
+
+
+    @GetMapping("/allpost")
+    public ModelAndView allPost(ModelAndView modelAndView) {
+        modelAndView.addObject("documents",postService.getAll());
+        modelAndView.setViewName("allpost");
+        return modelAndView;
+    }
+
 
     @GetMapping("/print/{id}")
     public ModelAndView getPost(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
         if(session.getAttribute("username")!=null) {
             modelAndView.addObject("post", postService.getPostById(id));
-            modelAndView.addObject("comments", commentService.getAllComments(id));
             modelAndView.setViewName("print");
         }else{
             modelAndView.setViewName("redirect:/login");

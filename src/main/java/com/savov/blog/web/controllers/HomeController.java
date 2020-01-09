@@ -25,26 +25,17 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class HomeController {
 
-    private final PostService postService;
-    private final CommentService commentService;
-    private final ReactionService reactionService;
-    private final UserService userService;
-
-
     @Autowired
-    public HomeController(PostRepository postRepository, RestTestControllers testControllers, PostService postService, CommentService commentService, ReactionService reactionService, UserService userService) {
-        this.postService = postService;
-        this.commentService = commentService;
-        this.reactionService = reactionService;
-        this.userService = userService;
+    public HomeController() {
     }
-
     @GetMapping("/")
     public ModelAndView home(ModelAndView modelAndView) {
-        modelAndView.addObject("documents",postService.getAll());
         modelAndView.setViewName("home");
         return modelAndView;
     }
+
+
+
 
 
 
