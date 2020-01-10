@@ -1,23 +1,25 @@
 package com.savov.blog.service;
 
 import com.savov.blog.domain.entities.Post;
+import com.savov.blog.domain.model.binding.PostBindingModel;
+import com.savov.blog.domain.model.service.PostServiceModel;
 
 import java.util.List;
 
 public interface PostService {
-    Post getPostById(Long id);
+    PostServiceModel getPostById(Long id);
 
-    List<Post> getAll();
+    List<PostServiceModel> getAll();
 
-    List<Post> getPostByUserId(Long id);
+    List<PostServiceModel> getPostByUserId(Long id);
 
-    Post addPost(Post post);
+    PostServiceModel addPost(PostServiceModel postServiceModel);
 
-    Post updatePost(Long id, Post post);
+    PostServiceModel updatePost(Long id, PostServiceModel postServiceModel);
 
-    Post deletePost(Long id);
+    PostServiceModel deletePost(Long id);
 
-    Post addPost(Post post,Long UserId);
+    PostServiceModel addPost(PostServiceModel postServiceModel, Long UserId);
 
-    Post updatePost(Long postId, Post post, Long userId);
+    PostServiceModel updatePost(Long postId, PostServiceModel postServiceModel, Long userId);
 }

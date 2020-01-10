@@ -1,12 +1,16 @@
 package com.savov.blog.service;
 
 import com.savov.blog.domain.entities.Comment;
+import com.savov.blog.domain.model.binding.CommentBindingModel;
+import com.savov.blog.domain.model.service.CommentServiceModel;
 import com.savov.blog.repository.CommentRepository;
 import com.savov.blog.repository.PostRepository;
 import com.savov.blog.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -15,59 +19,67 @@ public class CommentServiceImpl implements CommentService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
+    private final ModelMapper modelMapper;
 
 
-    public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository) {
+
+    public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public List<Comment> getAllComments(Long postId) {
+    public List<CommentServiceModel> getAllComments(Long postId) {
         List<Comment> comments = commentRepository.findByPostId(postId);
-        return comments;
+        return comments.stream().map(c->this.modelMapper.map(c,CommentServiceModel.class)).collect(Collectors.toList());
     }
 
     @Override
-    public List<Comment> getCommentsById(Long postId, Long id) {
+    public List<CommentServiceModel> getCommentsById(Long postId, Long id) {
         List<Comment> comments = commentRepository.findByPostIdAndId(postId,id);
-        return comments;
+        return comments.stream().map(c->this.modelMapper.map(c,CommentServiceModel.class)).collect(Collectors.toList());
     }
 
     @Override
-    public Comment addComments(Long postId, Comment comment) {
-        comment.setPost(postRepository.findById(postId).orElse(null));
-        return commentRepository.saveAndFlush(comment);
+    public CommentServiceModel addComments(Long postId, CommentServiceModel comment) {
+        Comment comment1 = this.modelMapper.map(comment,Comment.class);
+        comment1.setPost(postRepository.findById(postId).orElse(null));
+
+        return this.modelMapper.map(commentRepository.save(comment1),CommentServiceModel.class);
     }
 
     @Override
-    public Comment addComments(Long postId, Comment comment, Long id) {
-        comment.setUser(userRepository.findById(id).orElse(null));
+    public CommentServiceModel addComments(Long postId, CommentServiceModel comment, Long id) {
+        Comment comment1 = this.modelMapper.map(comment,Comment.class);
+        comment1.setUser(userRepository.findById(id).orElse(null));
         return addComments(postId,comment);
     }
 
     @Override
-    public Comment updateComments(Long postId, Long id, Comment comment) {
+    public CommentServiceModel updateComments(Long postId, Long id, CommentServiceModel comment) {
+        Comment c = this.modelMapper.map(comment,Comment.class);
         Comment comment1 = commentRepository.findById(id).orElse(null);
-        comment1.setPost(comment.getPost());
-        comment1.setBody(comment.getBody());
-        comment1.setUser(comment.getUser());
-        return commentRepository.saveAndFlush(comment1);
+        comment1.setPost(c.getPost());
+        comment1.setBody(c.getBody());
+        comment1.setUser(c.getUser());
+        return this.modelMapper.map(commentRepository.save(comment1),CommentServiceModel.class);
     }
 
     @Override
-    public Comment deleteComments(Long postId, Long id) {
+    public CommentServiceModel deleteComments(Long postId, Long id) {
         Comment comment = commentRepository.findById(id).orElse(null);
         commentRepository.deleteById(id);
 
-        return comment;
+        return this.modelMapper.map(comment,CommentServiceModel.class);
     }
 
     @Override
-    public List<Comment> getCommentsByUserId(Long userId) {
-
-        return  commentRepository.findByUserId(userId);
+    public List<CommentServiceModel> getCommentsByUserId(Long userId) {
+        List<Comment> comments = commentRepository.findByUserId(userId);
+        int a = 5;
+        return  comments.stream().map(c->this.modelMapper.map(c,CommentServiceModel.class)).collect(Collectors.toList());
     }
 }
 

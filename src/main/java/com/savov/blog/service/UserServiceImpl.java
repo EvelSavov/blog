@@ -6,9 +6,11 @@ import com.savov.blog.domain.entities.User;
 import com.savov.blog.domain.model.binding.UserLoginBindingModel;
 import com.savov.blog.repository.RoleRepository;
 import com.savov.blog.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,13 +18,15 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PostService postService;
     private final RoleRepository roleRepository;
+    private final ModelMapper modelMapper;
 
 
 
-    public UserServiceImpl(UserRepository userRepository, PostService postService, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, PostService postService, RoleRepository roleRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.postService = postService;
         this.roleRepository = roleRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -36,7 +40,7 @@ public class UserServiceImpl implements UserService {
     public List<Post> getPostByUsername(String username) {
         User user =  userRepository.findByUsername(username);
 
-        return postService.getPostByUserId(user.getId());
+        return postService.getPostByUserId(user.getId()).stream().map(p->this.modelMapper.map(p,Post.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -54,7 +58,7 @@ public class UserServiceImpl implements UserService {
         user1.setAddress(user.getAddress());
         user1.setEmail(user.getEmail());
         user1.setPassword(user.getPassword());
-        return  userRepository.saveAndFlush(user1);
+        return  userRepository.save(user1);
     }
 
     @Override
@@ -69,7 +73,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(username);
         Role role = roleRepository.findByName("Admin");
         user.setRole(role);
-        return userRepository.saveAndFlush(user);
+        return userRepository.save(user);
     }
 
     @Override
@@ -77,7 +81,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(username);
         Role role = roleRepository.findByName("User");
         user.setRole(role);
-        return userRepository.saveAndFlush(user);
+        return userRepository.save(user);
     }
 
     @Override

@@ -1,8 +1,9 @@
 package com.savov.blog.web.controllers;
 
-import com.savov.blog.domain.entities.Post;
-import com.savov.blog.service.CommentService;
+import com.savov.blog.domain.model.binding.PostBindingModel;
+import com.savov.blog.domain.model.service.PostServiceModel;
 import com.savov.blog.service.PostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,10 +17,12 @@ import javax.servlet.http.HttpSession;
 public class PostController {
 
     private final PostService postService;
+    private final ModelMapper modelMapper;
 
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, ModelMapper modelMapper) {
         this.postService = postService;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -65,10 +68,10 @@ public class PostController {
     }
 
     @PostMapping("/addpost")
-    public ModelAndView confirmAddPost(@ModelAttribute Post post, ModelAndView modelAndView, HttpSession session) {
+    public ModelAndView confirmAddPost(@ModelAttribute PostBindingModel post, ModelAndView modelAndView, HttpSession session) {
         if(session.getAttribute("username")!=null) {
 
-            postService.addPost(post, (Long) session.getAttribute("id"));
+            postService.addPost(this.modelMapper.map(post, PostServiceModel.class), (Long) session.getAttribute("id"));
             modelAndView.setViewName("redirect:/");
         }else{
             modelAndView.setViewName("redirect:/login");
@@ -103,9 +106,9 @@ public class PostController {
     }
 
     @PostMapping("/update/{id}")
-    public ModelAndView updateConfirm(@ModelAttribute Post post,@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session){
+    public ModelAndView updateConfirm(@ModelAttribute PostBindingModel post,@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session){
 
-        postService.updatePost(id,post, (Long) session.getAttribute("id"));
+        postService.updatePost(id,this.modelMapper.map(post, PostServiceModel.class), (Long) session.getAttribute("id"));
         modelAndView.setViewName("redirect:/profile");
         return modelAndView;
     }

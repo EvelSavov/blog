@@ -30,7 +30,7 @@ public class ReactionServiceImpl implements ReactionService {
     public Post addLike(Long postId) {
         Post post = postRepository.findById(postId).orElse(null);
         post.setLikeCount(post.getLikeCount()+1);
-        return postRepository.saveAndFlush(post);
+        return postRepository.save(post);
     }
 
 
@@ -38,6 +38,6 @@ public class ReactionServiceImpl implements ReactionService {
     public Post addDisike(Long postId) {
         Post post = postRepository.findById(postId).orElse(null);
         post.setDislikeCount(post.getDislikeCount()+1);
-        return postRepository.saveAndFlush(post);
+        return postRepository.save(post);
     }
 }

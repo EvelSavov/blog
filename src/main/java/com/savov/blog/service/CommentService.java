@@ -1,22 +1,24 @@
 package com.savov.blog.service;
 
 import com.savov.blog.domain.entities.Comment;
+import com.savov.blog.domain.model.binding.CommentBindingModel;
+import com.savov.blog.domain.model.service.CommentServiceModel;
 
 import java.util.List;
 
 public interface CommentService {
 
-    List<Comment> getAllComments(Long postId);
+    List<CommentServiceModel> getAllComments(Long postId);
 
-    List<Comment> getCommentsById(Long postId, Long id);
+    List<CommentServiceModel> getCommentsById(Long postId, Long id);
 
-    Comment addComments(Long postId, Comment comment);
+    CommentServiceModel addComments(Long postId, CommentServiceModel comment);
 
-    Comment updateComments(Long postId, Long id, Comment comment);
+    CommentServiceModel updateComments(Long postId, Long id, CommentServiceModel comment);
 
-    Comment deleteComments(Long postId, Long id);
+    CommentServiceModel deleteComments(Long postId, Long id);
 
-    Comment addComments(Long postId, Comment comment, Long id);
+    CommentServiceModel addComments(Long postId, CommentServiceModel comment, Long id);
 
-    List<Comment> getCommentsByUserId(Long userId);
+    List<CommentServiceModel> getCommentsByUserId(Long userId);
 }
