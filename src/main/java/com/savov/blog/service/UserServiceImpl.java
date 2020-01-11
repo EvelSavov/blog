@@ -4,9 +4,12 @@ import com.savov.blog.domain.entities.Post;
 import com.savov.blog.domain.entities.Role;
 import com.savov.blog.domain.entities.User;
 import com.savov.blog.domain.model.binding.UserLoginBindingModel;
+import com.savov.blog.domain.model.service.PostServiceModel;
+import com.savov.blog.domain.model.service.UserServiceModel;
 import com.savov.blog.repository.RoleRepository;
 import com.savov.blog.repository.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,77 +22,80 @@ public class UserServiceImpl implements UserService {
     private final PostService postService;
     private final RoleRepository roleRepository;
     private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-
-    public UserServiceImpl(UserRepository userRepository, PostService postService, RoleRepository roleRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository, PostService postService, RoleRepository roleRepository, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.postService = postService;
         this.roleRepository = roleRepository;
         this.modelMapper = modelMapper;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        User User = userRepository.findByUsername(username);
+    public UserServiceModel getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
 
-        return User;
+        return this.modelMapper.map(user,UserServiceModel.class);
     }
 
     @Override
-    public List<Post> getPostByUsername(String username) {
+    public List<PostServiceModel> getPostByUsername(String username) {
         User user =  userRepository.findByUsername(username);
+        List<Post> posts = postService.getPostByUserId(user.getId()).stream().map(p -> this.modelMapper.map(p, Post.class)).collect(Collectors.toList());
+        return posts.stream().map(p->this.modelMapper.map(p,PostServiceModel.class)).collect(Collectors.toList());
 
-        return postService.getPostByUserId(user.getId()).stream().map(p->this.modelMapper.map(p,Post.class)).collect(Collectors.toList());
     }
 
     @Override
-    public User addUser(User user) {
+    public UserServiceModel addUser(UserServiceModel userServiceModel) {
+        User user = this.modelMapper.map(userServiceModel,User.class);
         user.setRole(roleRepository.findByName("User"));
-        return userRepository.saveAndFlush(user);
+        user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
+        return this.modelMapper.map(userRepository.saveAndFlush(user),UserServiceModel.class);
     }
 
     @Override
-    public User updateUser(String username, User user) {
-        User user1 = userRepository.findByUsername(username);
-        user1.setFirstName(user.getFirstName());
-        user1.setLastName(user.getLastName());
-        user1.setUsername(user.getUsername());
-        user1.setAddress(user.getAddress());
-        user1.setEmail(user.getEmail());
-        user1.setPassword(user.getPassword());
-        return  userRepository.save(user1);
+    public UserServiceModel updateUser(String username, UserServiceModel userServiceModel) {
+        User user = userRepository.findByUsername(username);
+        user.setFirstName(userServiceModel.getFirstName());
+        user.setLastName(userServiceModel.getLastName());
+        user.setUsername(userServiceModel.getUsername());
+        user.setAddress(userServiceModel.getAddress());
+        user.setEmail(userServiceModel.getEmail());
+        user.setPassword(this.bCryptPasswordEncoder.encode(userServiceModel.getPassword()));
+        return  this.modelMapper.map(userRepository.save(user),UserServiceModel.class);
     }
 
     @Override
-    public User deleteUser(String username) {
+    public UserServiceModel deleteUser(String username) {
         User user = userRepository.findByUsername(username);
         userRepository.deleteByUsername(username);
-        return user;
+        return this.modelMapper.map(user,UserServiceModel.class);
     }
 
     @Override
-    public User giveAdminToUser(String username) {
+    public UserServiceModel giveAdminToUser(String username) {
         User user = userRepository.findByUsername(username);
         Role role = roleRepository.findByName("Admin");
         user.setRole(role);
-        return userRepository.save(user);
+        return this.modelMapper.map(userRepository.save(user),UserServiceModel.class);
     }
 
     @Override
-    public User takeAdminToUser(String username) {
+    public UserServiceModel takeAdminToUser(String username) {
         User user = userRepository.findByUsername(username);
         Role role = roleRepository.findByName("User");
         user.setRole(role);
-        return userRepository.save(user);
+        return this.modelMapper.map(userRepository.save(user),UserServiceModel.class);
     }
 
     @Override
-    public User loginUser(UserLoginBindingModel userLoginBindingModel) {
+    public UserServiceModel loginUser(UserLoginBindingModel userLoginBindingModel) {
         User user =  userRepository.findByUsername(userLoginBindingModel.getUsername());
-        if(user!=null&& user.getPassword().equals(userLoginBindingModel.getPassword()))
+        if((user!=null)&& (this.bCryptPasswordEncoder.matches(userLoginBindingModel.getPassword(),user.getPassword())))
         {
-            return user;
+            return this.modelMapper.map(user,UserServiceModel.class);
         }else return null;
     }
 }

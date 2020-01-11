@@ -1,5 +1,6 @@
 package com.savov.blog.domain.model.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.savov.blog.domain.entities.Category;
 
 import com.savov.blog.domain.entities.User;
@@ -22,6 +23,7 @@ public class PostServiceModel {
     private UserServiceModel user;
 
     private String category;
+
 
     private List<CommentServiceModel> comments;
 

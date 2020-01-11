@@ -39,7 +39,6 @@ public class CommentController {
     public ModelAndView myComments(ModelAndView modelAndView,HttpSession session) {
         if(session.getAttribute("username")!=null) {
             modelAndView.addObject("documents",commentService.getCommentsByUserId((Long) session.getAttribute("id")));
-            int a=5;
             modelAndView.setViewName("mycomments");
         }else{
             modelAndView.setViewName("redirect:/login");

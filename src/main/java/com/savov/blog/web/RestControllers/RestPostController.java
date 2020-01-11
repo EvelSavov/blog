@@ -2,6 +2,7 @@ package com.savov.blog.web.RestControllers;
 
 import com.savov.blog.domain.entities.Post;
 import com.savov.blog.domain.model.service.PostServiceModel;
+import com.savov.blog.domain.restModel.bainding.RestPostBindingModel;
 import com.savov.blog.service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @RestController
 @RequestMapping("/api/v1/posts")
 public class RestPostController {
 
     private final PostService postService;
     private final ModelMapper modelMapper;
+
     @Autowired
     public RestPostController(PostService postService, ModelMapper modelMapper) {
 
@@ -23,33 +30,55 @@ public class RestPostController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllPosts() {
-
-        return new ResponseEntity<>(postService.getAll(), HttpStatus.OK);
+    public ResponseEntity<?> getAllPosts(HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            List<PostServiceModel> model = postService.getAll();
+            return new ResponseEntity<>(model.stream().map(p -> this.modelMapper.map(p, RestPostBindingModel.class)), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
     }
 
     @GetMapping("/{id}")
-    public  ResponseEntity<?> getPostById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> getPostById(@PathVariable(name = "id") Long id, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            PostServiceModel post = postService.getPostById(id);
 
-        return new ResponseEntity<>(postService.getPostById(id), HttpStatus.OK);
+            return new ResponseEntity<>(this.modelMapper.map(post, RestPostBindingModel.class), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
     }
 
     @PostMapping
-    public ResponseEntity<?> addPost(@RequestBody Post post) {
-
-        return new ResponseEntity<>(postService.addPost(this.modelMapper.map(post, PostServiceModel.class)), HttpStatus.OK);
+    public ResponseEntity<?> addPost(@RequestBody RestPostBindingModel restPostBindingModel, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            PostServiceModel model = postService.addPost(this.modelMapper.map(restPostBindingModel, PostServiceModel.class));
+            return new ResponseEntity<>(this.modelMapper.map(model, RestPostBindingModel.class), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updatePost(@PathVariable(name = "id") Long id,@RequestBody Post post) {
+    public ResponseEntity<?> updatePost(@PathVariable(name = "id") Long id, @RequestBody RestPostBindingModel restPostBindingModel, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            PostServiceModel model = postService.updatePost(id, this.modelMapper.map(restPostBindingModel, PostServiceModel.class));
 
-        return new ResponseEntity<>(postService.updatePost(id,this.modelMapper.map(post, PostServiceModel.class)), HttpStatus.OK);
+            return new ResponseEntity<>(this.modelMapper.map(model, RestPostBindingModel.class), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePost(@PathVariable(name = "id") Long id) {
-
-        return new ResponseEntity<>(postService.deletePost(id), HttpStatus.OK);
+    public ResponseEntity<?> deletePost(@PathVariable(name = "id") Long id, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            PostServiceModel model = postService.deletePost(id);
+            return new ResponseEntity<>(this.modelMapper.map(model, RestPostBindingModel.class), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
     }
 
 

@@ -2,7 +2,9 @@ package com.savov.blog.web.controllers;
 
 import com.savov.blog.domain.entities.User;
 import com.savov.blog.domain.model.binding.UserLoginBindingModel;
+import com.savov.blog.domain.model.service.UserServiceModel;
 import com.savov.blog.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,9 +17,10 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService) {
+    private final ModelMapper modelMapper;
+    public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/login")
@@ -31,7 +34,7 @@ public class UserController {
     @PostMapping("/login")
     public ModelAndView loginConfirm(@ModelAttribute UserLoginBindingModel userLoginBindingModel, ModelAndView modelAndView, HttpSession session){
 
-        User user = userService.loginUser(userLoginBindingModel);
+        User user = this.modelMapper.map(userService.loginUser(userLoginBindingModel),User.class);
         if(user!=null){
             session.setAttribute("id",user.getId());
             session.setAttribute("username",user.getUsername());
@@ -52,7 +55,7 @@ public class UserController {
 
     @PostMapping("/registration")
     public ModelAndView registerConfirm(@ModelAttribute User user, ModelAndView modelAndView){
-        userService.addUser(user);
+        userService.addUser(this.modelMapper.map(user, UserServiceModel.class));
 
         modelAndView.setViewName("redirect:/login");
         return modelAndView;

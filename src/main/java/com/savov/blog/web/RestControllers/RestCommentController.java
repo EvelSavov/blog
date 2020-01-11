@@ -3,6 +3,7 @@ package com.savov.blog.web.RestControllers;
 import com.savov.blog.domain.entities.Comment;
 
 import com.savov.blog.domain.model.service.CommentServiceModel;
+import com.savov.blog.domain.restModel.bainding.RestCommentBindingModel;
 import com.savov.blog.service.CommentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @RestController
@@ -27,32 +30,60 @@ public class RestCommentController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllComments(@PathVariable(name = "postId") Long postId){
-        return new ResponseEntity<>(commentService.getAllComments(postId), HttpStatus.OK);
+    public ResponseEntity<?> getAllComments(@PathVariable(name = "postId") Long postId, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            List<CommentServiceModel> allComments = commentService.getAllComments(postId);
+
+            return new ResponseEntity<>(allComments.stream().map(c -> this.modelMapper.map(c, RestCommentBindingModel.class)), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCommentsById(@PathVariable(name = "postId") Long postId,
-                                     @PathVariable(name = "id") Long id){
-
-        return new ResponseEntity<>(commentService.getCommentsById(postId,id), HttpStatus.OK);
+                                             @PathVariable(name = "id") Long id,
+                                             HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            CommentServiceModel comments = commentService.getCommentsById(postId, id);
+            return new ResponseEntity<>(this.modelMapper.map(comments, RestCommentBindingModel.class), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
     }
 
     @PostMapping()
-    public ResponseEntity<?> addComments(@PathVariable(name = "postId") Long postId,@RequestBody Comment comment){
-        return new ResponseEntity<>(commentService.addComments(postId,this.modelMapper.map(comment, CommentServiceModel.class)), HttpStatus.OK);
+    public ResponseEntity<?> addComments(@PathVariable(name = "postId") Long postId, @RequestBody RestCommentBindingModel restCommentBindingModel, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            CommentServiceModel commentServiceModel = commentService.addComments(postId, this.modelMapper.map(restCommentBindingModel, CommentServiceModel.class));
+
+            return new ResponseEntity<>(this.modelMapper.map(commentServiceModel, RestCommentBindingModel.class), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateComments(@PathVariable(name = "postId") Long postId,
                                             @PathVariable(name = "id") Long id,
-                                            @RequestBody Comment comment){
-        return new ResponseEntity<>(commentService.updateComments(postId,id,this.modelMapper.map(comment, CommentServiceModel.class)), HttpStatus.OK);
+                                            @RequestBody RestCommentBindingModel restCommentBindingModel, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            CommentServiceModel commentServiceModel = commentService.updateComments(postId, id, this.modelMapper.map(restCommentBindingModel, CommentServiceModel.class));
+
+            return new ResponseEntity<>(this.modelMapper.map(commentServiceModel, RestCommentBindingModel.class), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteComments(@PathVariable(name = "postId") Long postId,
-                                 @PathVariable(name = "id") Long id){
-        return new ResponseEntity<>(commentService.deleteComments(postId,id), HttpStatus.OK);
+                                            @PathVariable(name = "id") Long id, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            CommentServiceModel commentServiceModel = commentService.deleteComments(postId, id);
+            return new ResponseEntity<>(this.modelMapper.map(commentServiceModel, RestCommentBindingModel.class), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
     }
 }

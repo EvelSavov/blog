@@ -59,7 +59,6 @@ public class PostServiceImpl implements PostService {
         post.setLikeCount((long) 0);
         post.setDislikeCount((long) 0);
         postRepository.saveAndFlush(post);
-        int a=5;
         return this.modelMapper.map(post,PostServiceModel.class);
     }
 

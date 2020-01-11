@@ -9,6 +9,7 @@ import com.savov.blog.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,9 +38,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentServiceModel> getCommentsById(Long postId, Long id) {
-        List<Comment> comments = commentRepository.findByPostIdAndId(postId,id);
-        return comments.stream().map(c->this.modelMapper.map(c,CommentServiceModel.class)).collect(Collectors.toList());
+    public CommentServiceModel getCommentsById(Long postId, Long id) {
+        Comment comment = commentRepository.findByPostIdAndId(postId,id);
+        return  this.modelMapper.map(comment,CommentServiceModel.class);
     }
 
     @Override

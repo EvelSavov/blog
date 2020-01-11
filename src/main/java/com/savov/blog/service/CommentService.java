@@ -10,7 +10,7 @@ public interface CommentService {
 
     List<CommentServiceModel> getAllComments(Long postId);
 
-    List<CommentServiceModel> getCommentsById(Long postId, Long id);
+    CommentServiceModel getCommentsById(Long postId, Long id);
 
     CommentServiceModel addComments(Long postId, CommentServiceModel comment);
 

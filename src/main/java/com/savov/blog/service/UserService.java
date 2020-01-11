@@ -1,26 +1,26 @@
 package com.savov.blog.service;
 
-import com.savov.blog.domain.entities.Post;
-import com.savov.blog.domain.entities.User;
 import com.savov.blog.domain.model.binding.UserLoginBindingModel;
+import com.savov.blog.domain.model.service.PostServiceModel;
+import com.savov.blog.domain.model.service.UserServiceModel;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<Post> getPostByUsername(String username);
+    List<PostServiceModel> getPostByUsername(String username);
 
-    User getUserByUsername(String username);
+    UserServiceModel getUserByUsername(String username);
 
-    User addUser(User user);
+    UserServiceModel addUser(UserServiceModel userServiceModel);
 
-    User updateUser(String username, User user);
+    UserServiceModel updateUser(String username, UserServiceModel userServiceModel);
 
-    User deleteUser(String username);
+    UserServiceModel deleteUser(String username);
 
-    User giveAdminToUser(String username);
+    UserServiceModel giveAdminToUser(String username);
 
-    User takeAdminToUser(String username);
+    UserServiceModel takeAdminToUser(String username);
 
-    User loginUser(UserLoginBindingModel userLoginBindingModel);
+    UserServiceModel loginUser(UserLoginBindingModel userLoginBindingModel);
 }

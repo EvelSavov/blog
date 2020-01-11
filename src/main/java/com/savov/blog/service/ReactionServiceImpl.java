@@ -1,16 +1,20 @@
 package com.savov.blog.service;
 
 import com.savov.blog.domain.entities.Post;
+import com.savov.blog.domain.model.service.PostServiceModel;
 import com.savov.blog.repository.PostRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ReactionServiceImpl implements ReactionService {
 
     private final PostRepository postRepository;
+    private final ModelMapper modelMapper;
 
-    public ReactionServiceImpl(PostRepository postRepository) {
+    public ReactionServiceImpl(PostRepository postRepository, ModelMapper modelMapper) {
         this.postRepository = postRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -27,17 +31,17 @@ public class ReactionServiceImpl implements ReactionService {
     }
 
     @Override
-    public Post addLike(Long postId) {
+    public PostServiceModel addLike(Long postId) {
         Post post = postRepository.findById(postId).orElse(null);
         post.setLikeCount(post.getLikeCount()+1);
-        return postRepository.save(post);
+        return this.modelMapper.map(postRepository.save(post),PostServiceModel.class);
     }
 
 
     @Override
-    public Post addDisike(Long postId) {
+    public PostServiceModel addDisike(Long postId) {
         Post post = postRepository.findById(postId).orElse(null);
         post.setDislikeCount(post.getDislikeCount()+1);
-        return postRepository.save(post);
+        return this.modelMapper.map(postRepository.save(post),PostServiceModel.class);
     }
 }

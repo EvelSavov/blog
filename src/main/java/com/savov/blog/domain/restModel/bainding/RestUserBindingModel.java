@@ -1,13 +1,14 @@
-package com.savov.blog.domain.model.service;
-
-
+package com.savov.blog.domain.restModel.bainding;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.savov.blog.domain.entities.Comment;
+import com.savov.blog.domain.entities.Post;
+import com.savov.blog.domain.entities.Role;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class UserServiceModel {
+public class RestUserBindingModel {
+
     private String firstName;
 
     private String lastName;
@@ -20,15 +21,16 @@ public class UserServiceModel {
 
     private String address;
 
-    private String role;
+    @JsonIgnore
+    private Role role;
 
-    private List<PostServiceModel> posts;
+    @JsonIgnore
+    private List<RestPostBindingModel> posts;
+    @JsonIgnore
+    private List<RestCommentBindingModel> comments;
 
-    private List<CommentServiceModel> comments;
 
-    public UserServiceModel() {
-        this.posts = new ArrayList<>();
-        this.comments = new ArrayList<>();
+    public RestUserBindingModel() {
     }
 
     public String getFirstName() {
@@ -79,27 +81,27 @@ public class UserServiceModel {
         this.address = address;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    public List<PostServiceModel> getPosts() {
+    public List<RestPostBindingModel> getPosts() {
         return posts;
     }
 
-    public void setPosts(List<PostServiceModel> posts) {
+    public void setPosts(List<RestPostBindingModel> posts) {
         this.posts = posts;
     }
 
-    public List<CommentServiceModel> getComments() {
+    public List<RestCommentBindingModel> getComments() {
         return comments;
     }
 
-    public void setComments(List<CommentServiceModel> comments) {
+    public void setComments(List<RestCommentBindingModel> comments) {
         this.comments = comments;
     }
 }
