@@ -15,6 +15,7 @@ public class Category extends BaseEntity {
 
     private List<Post> posts;
 
+
     public Category() {
     }
 

@@ -1,6 +1,7 @@
 package com.savov.blog.domain.model.binding;
 
 public class CommentBindingModel {
+
     private String body;
 
     public CommentBindingModel() {

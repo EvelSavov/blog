@@ -5,7 +5,6 @@ public class RestCommentBindingModel {
     private String body;
 
 
-
     public RestCommentBindingModel() {
     }
 

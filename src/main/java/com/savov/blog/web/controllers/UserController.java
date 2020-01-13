@@ -60,6 +60,7 @@ public class UserController {
         modelAndView.setViewName("redirect:/login");
         return modelAndView;
     }
+
     @GetMapping("/logout")
     public ModelAndView logout(ModelAndView modelAndView,HttpSession session){
         if(session.getAttribute("username")!=null) {
@@ -69,6 +70,7 @@ public class UserController {
 
         return modelAndView;
     }
+
     @GetMapping("/profile")
     public ModelAndView myProfile(ModelAndView modelAndView,HttpSession session) {
         if (session.getAttribute("username") != null) {

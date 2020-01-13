@@ -36,9 +36,8 @@ public class PostController {
         return modelAndView;
     }
 
-
     @GetMapping("/print/{id}")
-    public ModelAndView getPost(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
+    public ModelAndView getPostById(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
         if(session.getAttribute("username")!=null) {
             modelAndView.addObject("post", postService.getPostById(id));
             modelAndView.setViewName("print");
@@ -83,18 +82,6 @@ public class PostController {
         return modelAndView;
     }
 
-    @GetMapping("/delete/{id}")
-    public ModelAndView deletePost(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
-        if(session.getAttribute("username")!=null) {
-            postService.deletePost(id);
-            modelAndView.setViewName("redirect:/profile");
-        }else{
-            modelAndView.setViewName("redirect:/login");
-        }
-        return modelAndView;
-
-    }
-
     @GetMapping("/update/{id}")
     public ModelAndView update(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
         if(session.getAttribute("username")!=null) {
@@ -116,6 +103,18 @@ public class PostController {
         return modelAndView;
     }
 
+    @GetMapping("/delete/{id}")
+    public ModelAndView deletePost(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
+        if(session.getAttribute("username")!=null) {
+            postService.deletePost(id);
+            modelAndView.setViewName("redirect:/profile");
+        }else{
+            modelAndView.setViewName("redirect:/login");
+        }
+        return modelAndView;
+
+    }
+
     @GetMapping("/print/like/{id}")
     public ModelAndView like(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
         if(session.getAttribute("username")!=null) {
@@ -128,6 +127,7 @@ public class PostController {
         }
         return modelAndView;
     }
+
     @GetMapping("/print/dislike/{id}")
     public ModelAndView dislike(@PathVariable(name = "id") Long id,ModelAndView modelAndView,HttpSession session) {
         if(session.getAttribute("username")!=null) {

@@ -24,8 +24,8 @@ public class PostServiceModel {
 
     private String category;
 
-
     private List<CommentServiceModel> comments;
+
 
     public PostServiceModel() {
         this.comments = new ArrayList<>();

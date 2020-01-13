@@ -27,6 +27,7 @@ public class User extends BaseEntity {
 
     private List<Comment> comments;
 
+
     public User() {
     }
 

@@ -4,11 +4,13 @@ package com.savov.blog.domain.model.service;
 import com.savov.blog.domain.entities.Post;
 
 public class CommentServiceModel {
+
     private String body;
 
     private PostServiceModel post;
 
     private String user;
+
 
     public CommentServiceModel() {
     }

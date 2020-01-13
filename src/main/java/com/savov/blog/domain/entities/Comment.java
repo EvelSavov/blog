@@ -14,6 +14,7 @@ public class Comment extends BaseEntity{
 
         private User user;
 
+
     public Comment() {
     }
 

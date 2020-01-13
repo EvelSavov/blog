@@ -1,6 +1,5 @@
 package com.savov.blog.web.RestControllers;
 
-import com.savov.blog.domain.entities.Comment;
 
 import com.savov.blog.domain.model.service.CommentServiceModel;
 import com.savov.blog.domain.restModel.bainding.RestCommentBindingModel;
@@ -41,9 +40,7 @@ public class RestCommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCommentsById(@PathVariable(name = "postId") Long postId,
-                                             @PathVariable(name = "id") Long id,
-                                             HttpSession session) {
+    public ResponseEntity<?> getCommentsById(@PathVariable(name = "postId") Long postId, @PathVariable(name = "id") Long id, HttpSession session) {
         if (session.getAttribute("username") != null) {
             CommentServiceModel comments = commentService.getCommentsById(postId, id);
             return new ResponseEntity<>(this.modelMapper.map(comments, RestCommentBindingModel.class), HttpStatus.OK);
@@ -55,7 +52,8 @@ public class RestCommentController {
     @PostMapping()
     public ResponseEntity<?> addComments(@PathVariable(name = "postId") Long postId, @RequestBody RestCommentBindingModel restCommentBindingModel, HttpSession session) {
         if (session.getAttribute("username") != null) {
-            CommentServiceModel commentServiceModel = commentService.addComments(postId, this.modelMapper.map(restCommentBindingModel, CommentServiceModel.class));
+            Long userId = (Long) session.getAttribute("id");
+            CommentServiceModel commentServiceModel = commentService.addComments(postId, this.modelMapper.map(restCommentBindingModel, CommentServiceModel.class),userId);
 
             return new ResponseEntity<>(this.modelMapper.map(commentServiceModel, RestCommentBindingModel.class), HttpStatus.OK);
         } else {
@@ -64,9 +62,7 @@ public class RestCommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateComments(@PathVariable(name = "postId") Long postId,
-                                            @PathVariable(name = "id") Long id,
-                                            @RequestBody RestCommentBindingModel restCommentBindingModel, HttpSession session) {
+    public ResponseEntity<?> updateComments(@PathVariable(name = "postId") Long postId, @PathVariable(name = "id") Long id, @RequestBody RestCommentBindingModel restCommentBindingModel, HttpSession session) {
         if (session.getAttribute("username") != null) {
             CommentServiceModel commentServiceModel = commentService.updateComments(postId, id, this.modelMapper.map(restCommentBindingModel, CommentServiceModel.class));
 
@@ -77,8 +73,7 @@ public class RestCommentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteComments(@PathVariable(name = "postId") Long postId,
-                                            @PathVariable(name = "id") Long id, HttpSession session) {
+    public ResponseEntity<?> deleteComments(@PathVariable(name = "postId") Long postId, @PathVariable(name = "id") Long id, HttpSession session) {
         if (session.getAttribute("username") != null) {
             CommentServiceModel commentServiceModel = commentService.deleteComments(postId, id);
             return new ResponseEntity<>(this.modelMapper.map(commentServiceModel, RestCommentBindingModel.class), HttpStatus.OK);

@@ -3,7 +3,9 @@ package com.savov.blog.domain.restModel.bainding;
 public class RestUserLoginBindingModel {
 
     private String username;
+
     private String password;
+
 
     public RestUserLoginBindingModel() {
     }

@@ -30,6 +30,14 @@ public class RestUserController {
         this.modelMapper = modelMapper;
     }
 
+    @PostMapping
+    public ResponseEntity<?> addUsers(@RequestBody RestUserBindingModel restUserBindingModel, HttpSession session) {
+
+        UserServiceModel user = userService.addUser(this.modelMapper.map(restUserBindingModel, UserServiceModel.class));
+        return new ResponseEntity<>(this.modelMapper.map(user, RestUserBindingModel.class), HttpStatus.OK);
+
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> singUp(@RequestBody RestUserLoginBindingModel restUserLoginBindingModel, HttpSession session) {
         User user = this.modelMapper.map(userService.loginUser(this.modelMapper.map(restUserLoginBindingModel, UserLoginBindingModel.class)), User.class);
@@ -50,7 +58,6 @@ public class RestUserController {
         return new ResponseEntity<>("logout", HttpStatus.OK);
     }
 
-
     @GetMapping("/me")
     public ResponseEntity<?> getMyProfile(HttpSession session) {
         if (session.getAttribute("username") != null) {
@@ -60,7 +67,7 @@ public class RestUserController {
         }
     }
 
-    @GetMapping("/{username}/profile")
+    @GetMapping("/{username}")
     public ResponseEntity<?> getProfileByUsername(@PathVariable(name = "username") String username, HttpSession session) {
         if (session.getAttribute("username") != null) {
             UserServiceModel user = userService.getUserByUsername(username);
@@ -68,25 +75,6 @@ public class RestUserController {
         } else {
             return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
         }
-
-    }
-
-    @GetMapping("/{username}/posts")
-    public ResponseEntity<?> getPostsByUsername(@PathVariable(name = "username") String username, HttpSession session) {
-        if (session.getAttribute("username") != null) {
-            List<PostServiceModel> user = userService.getPostByUsername(username);
-            return new ResponseEntity<>(user.stream().map(u -> this.modelMapper.map(u, RestUserBindingModel.class)), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
-        }
-    }
-
-
-    @PostMapping
-    public ResponseEntity<?> addUsers(@RequestBody RestUserBindingModel restUserBindingModel, HttpSession session) {
-
-            UserServiceModel user = userService.addUser(this.modelMapper.map(restUserBindingModel, UserServiceModel.class));
-            return new ResponseEntity<>(this.modelMapper.map(user, RestUserBindingModel.class), HttpStatus.OK);
 
     }
 

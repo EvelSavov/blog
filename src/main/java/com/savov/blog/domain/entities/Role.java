@@ -13,6 +13,7 @@ public class Role extends BaseEntity{
 
     private List<User> users;
 
+
     public Role() {
     }
 

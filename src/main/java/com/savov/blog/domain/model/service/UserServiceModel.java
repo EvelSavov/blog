@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceModel {
+
+    private Long id;
+
     private String firstName;
 
     private String lastName;
@@ -26,9 +29,18 @@ public class UserServiceModel {
 
     private List<CommentServiceModel> comments;
 
+
     public UserServiceModel() {
         this.posts = new ArrayList<>();
         this.comments = new ArrayList<>();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {

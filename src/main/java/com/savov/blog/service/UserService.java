@@ -8,19 +8,17 @@ import java.util.List;
 
 public interface UserService {
 
-    List<PostServiceModel> getPostByUsername(String username);
+    UserServiceModel addUser(UserServiceModel userServiceModel);
+
+    UserServiceModel loginUser(UserLoginBindingModel userLoginBindingModel);
 
     UserServiceModel getUserByUsername(String username);
 
-    UserServiceModel addUser(UserServiceModel userServiceModel);
-
     UserServiceModel updateUser(String username, UserServiceModel userServiceModel);
-
-    UserServiceModel deleteUser(String username);
 
     UserServiceModel giveAdminToUser(String username);
 
     UserServiceModel takeAdminToUser(String username);
 
-    UserServiceModel loginUser(UserLoginBindingModel userLoginBindingModel);
+    UserServiceModel deleteUser(String username);
 }

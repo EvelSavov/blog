@@ -1,6 +1,6 @@
 package com.savov.blog.web.RestControllers;
 
-import com.savov.blog.domain.entities.Post;
+
 import com.savov.blog.domain.model.service.PostServiceModel;
 import com.savov.blog.domain.restModel.bainding.RestPostBindingModel;
 import com.savov.blog.service.PostService;
@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -64,9 +63,17 @@ public class RestPostController {
     public ResponseEntity<?> getPostByCategoryId(@PathVariable(name = "id") Long id, HttpSession session) {
         if (session.getAttribute("username") != null) {
             List<PostServiceModel> post = postService.getPostByCategoryId(id);
+            return new ResponseEntity<>(post.stream().map(p->this.modelMapper.map(p,RestPostBindingModel.class)), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
+    }
 
-
-            return new ResponseEntity<>(this.modelMapper.map(post, RestPostBindingModel.class), HttpStatus.OK);
+    @GetMapping("user/{id}")
+    public ResponseEntity<?> getPostByUserId(@PathVariable(name = "id") Long id, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            List<PostServiceModel> post = postService.getPostByUserId(id);
+            return new ResponseEntity<>(post.stream().map(p->this.modelMapper.map(p,RestPostBindingModel.class)), HttpStatus.OK);
         } else {
             return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
         }
@@ -75,7 +82,8 @@ public class RestPostController {
     @PostMapping
     public ResponseEntity<?> addPost(@RequestBody RestPostBindingModel restPostBindingModel, HttpSession session) {
         if (session.getAttribute("username") != null) {
-            PostServiceModel model = postService.addPost(this.modelMapper.map(restPostBindingModel, PostServiceModel.class));
+            Long userId = (Long) session.getAttribute("id");
+            PostServiceModel model = postService.addPost(this.modelMapper.map(restPostBindingModel, PostServiceModel.class), userId);
             return new ResponseEntity<>(this.modelMapper.map(model, RestPostBindingModel.class), HttpStatus.OK);
         } else {
             return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
@@ -85,8 +93,8 @@ public class RestPostController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePost(@PathVariable(name = "id") Long id, @RequestBody RestPostBindingModel restPostBindingModel, HttpSession session) {
         if (session.getAttribute("username") != null) {
-            PostServiceModel model = postService.updatePost(id, this.modelMapper.map(restPostBindingModel, PostServiceModel.class));
-
+            Long userId = (Long) session.getAttribute("id");
+            PostServiceModel model = postService.updatePost(id, this.modelMapper.map(restPostBindingModel, PostServiceModel.class),userId );
             return new ResponseEntity<>(this.modelMapper.map(model, RestPostBindingModel.class), HttpStatus.OK);
         } else {
             return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
@@ -103,7 +111,7 @@ public class RestPostController {
         }
     }
 
-    @GetMapping("/like")
+    @GetMapping("/{postId}/like")
     public ResponseEntity<?> getLike(@PathVariable(name = "postId") Long postId, HttpSession session) {
         if (session.getAttribute("username") != null) {
             return new ResponseEntity<>(postService.getLike(postId), HttpStatus.OK);
@@ -112,7 +120,7 @@ public class RestPostController {
         }
     }
 
-    @GetMapping("/dislike")
+    @GetMapping("/{postId}/dislike")
     public ResponseEntity<?> getDislike(@PathVariable(name = "postId") Long postId, HttpSession session) {
         if (session.getAttribute("username") != null) {
             return new ResponseEntity<>(postService.getDislike(postId), HttpStatus.OK);
@@ -121,8 +129,7 @@ public class RestPostController {
         }
     }
 
-
-    @PostMapping("/like")
+    @PostMapping("/{postId}/like")
     public ResponseEntity<?> addLike(@PathVariable(name = "postId") Long postId, HttpSession session) {
         if (session.getAttribute("username") != null) {
             return new ResponseEntity<>(postService.addLike(postId), HttpStatus.OK);
@@ -131,7 +138,7 @@ public class RestPostController {
         }
     }
 
-    @PostMapping("/dislike")
+    @PostMapping("/{postId}/dislike")
     public ResponseEntity<?> addDislike(@PathVariable(name = "postId") Long postId, HttpSession session) {
         if (session.getAttribute("username") != null) {
             return new ResponseEntity<>(postService.addDislike(postId), HttpStatus.OK);

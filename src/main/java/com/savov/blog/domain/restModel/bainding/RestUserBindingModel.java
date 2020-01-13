@@ -21,6 +21,7 @@ public class RestUserBindingModel {
 
     private String address;
 
+
     @JsonIgnore
     private Role role;
 

@@ -1,11 +1,13 @@
 package com.savov.blog.domain.model.binding;
 
 public class PostBindingModel {
+
     private String title;
 
     private String body;
 
     private String category;
+
 
     public PostBindingModel() {
     }

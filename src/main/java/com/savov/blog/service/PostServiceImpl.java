@@ -27,21 +27,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostServiceModel getPostById(Long id) {
-        Post post = postRepository.findById(id).orElse(null);
-        return this.modelMapper.map(post,PostServiceModel.class);
-    }
-
-    @Override
     public List<PostServiceModel> getAll() {
         List<Post> posts = postRepository.findAll();
         return posts.stream().map(p->this.modelMapper.map(p,PostServiceModel.class)).collect(Collectors.toList());
     }
 
     @Override
-    public List<PostServiceModel> getTopPost() {
-        List<Post> posts = postRepository.findTop5ByOrderByLikeCountDesc();
-        return posts.stream().map(p->this.modelMapper.map(p,PostServiceModel.class)).collect(Collectors.toList());
+    public PostServiceModel getPostById(Long id) {
+        Post post = postRepository.findById(id).orElse(null);
+        return this.modelMapper.map(post,PostServiceModel.class);
     }
 
     @Override
@@ -51,12 +45,25 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostServiceModel addPost(PostServiceModel postServiceModel) {
-        Post post = this.modelMapper.map(postServiceModel,Post.class);
-        post.setLikeCount((long) 0);
-        post.setDislikeCount((long) 0);
-        return this.modelMapper.map(postRepository.save(post),PostServiceModel.class);
+    public List<PostServiceModel> getPostByCategoryId(Long categoryId) {
+        List<Post> posts = postRepository.findByCategoryId(categoryId);
+        return posts.stream().map(p->this.modelMapper.map(p,PostServiceModel.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<PostServiceModel> getTopPost() {
+        List<Post> posts = postRepository.findTop5ByOrderByLikeCountDesc();
+        return posts.stream().map(p->this.modelMapper.map(p,PostServiceModel.class)).collect(Collectors.toList());
+    }
+
+//    @Override
+//    public PostServiceModel addPost(PostServiceModel postServiceModel) {
+//        Post post = this.modelMapper.map(postServiceModel,Post.class);
+//        post.setLikeCount((long) 0);
+//        post.setDislikeCount((long) 0);
+//        return this.modelMapper.map(postRepository.save(post),PostServiceModel.class);
+//    }
+
     @Override
     public PostServiceModel addPost(PostServiceModel postServiceModel, Long UserId) {
         Post post = this.modelMapper.map(postServiceModel,Post.class);
@@ -68,23 +75,26 @@ public class PostServiceImpl implements PostService {
         return this.modelMapper.map(post,PostServiceModel.class);
     }
 
-    @Override
-    public PostServiceModel updatePost(Long id, PostServiceModel postServiceModel) {
-        Post post = this.modelMapper.map(postServiceModel,Post.class);
-        Post post1 = postRepository.findById(id).orElse(null);
-        post1.setBody(post.getBody());
-        post1.setCategory(post.getCategory());
-        post1.setTitle(post.getTitle());
-
-        return this.modelMapper.map(postRepository.save(post1),PostServiceModel.class);
-    }
+//    @Override
+//    public PostServiceModel updatePost(Long id, PostServiceModel postServiceModel) {
+//        Post post = this.modelMapper.map(postServiceModel,Post.class);
+//        Post post1 = postRepository.findById(id).orElse(null);
+//        post1.setBody(post.getBody());
+//        post1.setCategory(post.getCategory());
+//        post1.setTitle(post.getTitle());
+//
+//        return this.modelMapper.map(postRepository.save(post1),PostServiceModel.class);
+//    }
 
     @Override
     public PostServiceModel updatePost(Long postId, PostServiceModel postServiceModel, Long userId) {
         Post post = this.modelMapper.map(postServiceModel,Post.class);
-        post.setUser(userRepository.findById(userId).orElse(null));
-
-        return updatePost(postId,this.modelMapper.map(post,PostServiceModel.class));
+        Post post1 = postRepository.findById(postId).orElse(null);
+        //post.setUser(userRepository.findById(userId).orElse(null));
+        post1.setBody(post.getBody());
+        post1.setCategory(categoryRepos.findById((Long.parseLong(postServiceModel.getCategory()))).orElse(null));
+        post1.setTitle(post.getTitle());
+        return this.modelMapper.map(postRepository.saveAndFlush(post1),PostServiceModel.class);
     }
 
     @Override
@@ -92,12 +102,6 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.findById(id).orElse(null);
         postRepository.deleteById(id);
         return this.modelMapper.map(post,PostServiceModel.class);
-    }
-
-    @Override
-    public List<PostServiceModel> getPostByCategoryId(Long categoryId) {
-        List<Post> posts = postRepository.findByCategoryId(categoryId);
-        return posts.stream().map(p->this.modelMapper.map(p,PostServiceModel.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -118,7 +122,6 @@ public class PostServiceImpl implements PostService {
         post.setLikeCount(post.getLikeCount()+1);
         return this.modelMapper.map(postRepository.save(post),PostServiceModel.class);
     }
-
 
     @Override
     public PostServiceModel addDislike(Long postId) {

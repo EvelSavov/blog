@@ -26,6 +26,7 @@ public class Post extends BaseEntity  {
 
     private List<Comment> comments;
 
+
     public Post() {
     }
 
