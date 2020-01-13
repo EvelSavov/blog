@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserServiceModel deleteUser(String username) {
         User user = userRepository.findByUsername(username);
-        userRepository.deleteByUsername(username);
+        userRepository.deleteById(user.getId());
         return this.modelMapper.map(user,UserServiceModel.class);
     }
 }

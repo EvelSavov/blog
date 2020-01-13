@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("api/v1/posts/{postId}/comments")
+@RequestMapping("api/v1/comments")
 public class RestCommentController {
 
     private final CommentService commentService;
@@ -29,9 +29,9 @@ public class RestCommentController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllComments(@PathVariable(name = "postId") Long postId, HttpSession session) {
+    public ResponseEntity<?> getAllComments(HttpSession session) {
         if (session.getAttribute("username") != null) {
-            List<CommentServiceModel> allComments = commentService.getAllComments(postId);
+            List<CommentServiceModel> allComments = commentService.getAllComments();
 
             return new ResponseEntity<>(allComments.stream().map(c -> this.modelMapper.map(c, RestCommentBindingModel.class)), HttpStatus.OK);
         } else {
@@ -40,16 +40,38 @@ public class RestCommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCommentsById(@PathVariable(name = "postId") Long postId, @PathVariable(name = "id") Long id, HttpSession session) {
+    public ResponseEntity<?> getCommentsById(@PathVariable(name = "id") Long id, HttpSession session) {
         if (session.getAttribute("username") != null) {
-            CommentServiceModel comments = commentService.getCommentsById(postId, id);
+            CommentServiceModel comments = commentService.getCommentsById(id);
             return new ResponseEntity<>(this.modelMapper.map(comments, RestCommentBindingModel.class), HttpStatus.OK);
         } else {
             return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
         }
     }
 
-    @PostMapping()
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<?> getByPostId(@PathVariable(name = "postId") Long postId, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            List<CommentServiceModel> allComments = commentService.getByPostId(postId);
+
+            return new ResponseEntity<>(allComments.stream().map(c -> this.modelMapper.map(c, RestCommentBindingModel.class)), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<?> getByUserId(@PathVariable(name = "userId") Long userId, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            List<CommentServiceModel> allComments = commentService.getCommentsByUserId(userId);
+
+            return new ResponseEntity<>(allComments.stream().map(c -> this.modelMapper.map(c, RestCommentBindingModel.class)), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @PostMapping("/post/{postId}")
     public ResponseEntity<?> addComments(@PathVariable(name = "postId") Long postId, @RequestBody RestCommentBindingModel restCommentBindingModel, HttpSession session) {
         if (session.getAttribute("username") != null) {
             Long userId = (Long) session.getAttribute("id");
@@ -62,9 +84,9 @@ public class RestCommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateComments(@PathVariable(name = "postId") Long postId, @PathVariable(name = "id") Long id, @RequestBody RestCommentBindingModel restCommentBindingModel, HttpSession session) {
+    public ResponseEntity<?> updateComments( @PathVariable(name = "id") Long id, @RequestBody RestCommentBindingModel restCommentBindingModel, HttpSession session) {
         if (session.getAttribute("username") != null) {
-            CommentServiceModel commentServiceModel = commentService.updateComments(postId, id, this.modelMapper.map(restCommentBindingModel, CommentServiceModel.class));
+            CommentServiceModel commentServiceModel = commentService.updateComments(id, this.modelMapper.map(restCommentBindingModel, CommentServiceModel.class));
 
             return new ResponseEntity<>(this.modelMapper.map(commentServiceModel, RestCommentBindingModel.class), HttpStatus.OK);
         } else {
@@ -73,9 +95,9 @@ public class RestCommentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteComments(@PathVariable(name = "postId") Long postId, @PathVariable(name = "id") Long id, HttpSession session) {
+    public ResponseEntity<?> deleteComments(@PathVariable(name = "id") Long id, HttpSession session) {
         if (session.getAttribute("username") != null) {
-            CommentServiceModel commentServiceModel = commentService.deleteComments(postId, id);
+            CommentServiceModel commentServiceModel = commentService.deleteComments(id);
             return new ResponseEntity<>(this.modelMapper.map(commentServiceModel, RestCommentBindingModel.class), HttpStatus.OK);
         } else {
             return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);

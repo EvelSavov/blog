@@ -120,7 +120,7 @@ public class PostController {
         if(session.getAttribute("username")!=null) {
             postService.addLike(id);
             modelAndView.addObject("post", postService.getPostById(id));
-            modelAndView.addObject("comments", commentService.getAllComments(id));
+            modelAndView.addObject("comments", commentService.getByPostId(id));
             modelAndView.setViewName("print");
         }else{
             modelAndView.setViewName("redirect:/login");
@@ -134,7 +134,7 @@ public class PostController {
 
             postService.addDislike(id);
             modelAndView.addObject("post", postService.getPostById(id));
-            modelAndView.addObject("comments", commentService.getAllComments(id));
+            modelAndView.addObject("comments", commentService.getByPostId(id));
             modelAndView.setViewName("print");
 
         }else

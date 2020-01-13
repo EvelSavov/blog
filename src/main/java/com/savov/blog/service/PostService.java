@@ -17,11 +17,7 @@ public interface PostService {
 
     List<PostServiceModel> getTopPost();
 
-//    PostServiceModel addPost(PostServiceModel postServiceModel);
-
     PostServiceModel addPost(PostServiceModel postServiceModel, Long UserId);
-
-//    PostServiceModel updatePost(Long id, PostServiceModel postServiceModel);
 
     PostServiceModel updatePost(Long postId, PostServiceModel postServiceModel, Long userId);
 

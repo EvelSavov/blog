@@ -56,14 +56,6 @@ public class PostServiceImpl implements PostService {
         return posts.stream().map(p->this.modelMapper.map(p,PostServiceModel.class)).collect(Collectors.toList());
     }
 
-//    @Override
-//    public PostServiceModel addPost(PostServiceModel postServiceModel) {
-//        Post post = this.modelMapper.map(postServiceModel,Post.class);
-//        post.setLikeCount((long) 0);
-//        post.setDislikeCount((long) 0);
-//        return this.modelMapper.map(postRepository.save(post),PostServiceModel.class);
-//    }
-
     @Override
     public PostServiceModel addPost(PostServiceModel postServiceModel, Long UserId) {
         Post post = this.modelMapper.map(postServiceModel,Post.class);
@@ -75,22 +67,10 @@ public class PostServiceImpl implements PostService {
         return this.modelMapper.map(post,PostServiceModel.class);
     }
 
-//    @Override
-//    public PostServiceModel updatePost(Long id, PostServiceModel postServiceModel) {
-//        Post post = this.modelMapper.map(postServiceModel,Post.class);
-//        Post post1 = postRepository.findById(id).orElse(null);
-//        post1.setBody(post.getBody());
-//        post1.setCategory(post.getCategory());
-//        post1.setTitle(post.getTitle());
-//
-//        return this.modelMapper.map(postRepository.save(post1),PostServiceModel.class);
-//    }
-
     @Override
     public PostServiceModel updatePost(Long postId, PostServiceModel postServiceModel, Long userId) {
         Post post = this.modelMapper.map(postServiceModel,Post.class);
         Post post1 = postRepository.findById(postId).orElse(null);
-        //post.setUser(userRepository.findById(userId).orElse(null));
         post1.setBody(post.getBody());
         post1.setCategory(categoryRepos.findById((Long.parseLong(postServiceModel.getCategory()))).orElse(null));
         post1.setTitle(post.getTitle());
@@ -120,7 +100,7 @@ public class PostServiceImpl implements PostService {
     public PostServiceModel addLike(Long postId) {
         Post post = postRepository.findById(postId).orElse(null);
         post.setLikeCount(post.getLikeCount()+1);
-        return this.modelMapper.map(postRepository.save(post),PostServiceModel.class);
+        return this.modelMapper.map(postRepository.saveAndFlush(post),PostServiceModel.class);
     }
 
     @Override

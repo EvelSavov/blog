@@ -132,7 +132,8 @@ public class RestPostController {
     @PostMapping("/{postId}/like")
     public ResponseEntity<?> addLike(@PathVariable(name = "postId") Long postId, HttpSession session) {
         if (session.getAttribute("username") != null) {
-            return new ResponseEntity<>(postService.addLike(postId), HttpStatus.OK);
+            PostServiceModel model = postService.addLike(postId);
+            return new ResponseEntity<>(this.modelMapper.map(model,RestPostBindingModel.class), HttpStatus.OK);
         } else {
             return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
         }
@@ -141,7 +142,8 @@ public class RestPostController {
     @PostMapping("/{postId}/dislike")
     public ResponseEntity<?> addDislike(@PathVariable(name = "postId") Long postId, HttpSession session) {
         if (session.getAttribute("username") != null) {
-            return new ResponseEntity<>(postService.addDislike(postId), HttpStatus.OK);
+            PostServiceModel model = postService.addDislike(postId);
+            return new ResponseEntity<>(this.modelMapper.map(model,RestPostBindingModel.class), HttpStatus.OK);
         } else {
             return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
         }

@@ -85,7 +85,7 @@ public class User extends BaseEntity {
         this.address = address;
     }
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "role_id")
     public Role getRole() {
         return role;
