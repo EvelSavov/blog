@@ -2,6 +2,7 @@ package com.savov.blog.web.controllers;
 
 import com.savov.blog.domain.model.binding.PostBindingModel;
 import com.savov.blog.domain.model.service.PostServiceModel;
+import com.savov.blog.service.CommentService;
 import com.savov.blog.service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,13 @@ public class PostController {
 
     private final PostService postService;
     private final ModelMapper modelMapper;
+    private final CommentService commentService;
 
 
-    public PostController(PostService postService, ModelMapper modelMapper) {
+    public PostController(PostService postService, ModelMapper modelMapper, CommentService commentService) {
         this.postService = postService;
         this.modelMapper = modelMapper;
+        this.commentService = commentService;
     }
 
 
@@ -113,4 +116,31 @@ public class PostController {
         return modelAndView;
     }
 
+    @GetMapping("/print/like/{id}")
+    public ModelAndView like(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
+        if(session.getAttribute("username")!=null) {
+            postService.addLike(id);
+            modelAndView.addObject("post", postService.getPostById(id));
+            modelAndView.addObject("comments", commentService.getAllComments(id));
+            modelAndView.setViewName("print");
+        }else{
+            modelAndView.setViewName("redirect:/login");
+        }
+        return modelAndView;
+    }
+    @GetMapping("/print/dislike/{id}")
+    public ModelAndView dislike(@PathVariable(name = "id") Long id,ModelAndView modelAndView,HttpSession session) {
+        if(session.getAttribute("username")!=null) {
+
+            postService.addDislike(id);
+            modelAndView.addObject("post", postService.getPostById(id));
+            modelAndView.addObject("comments", commentService.getAllComments(id));
+            modelAndView.setViewName("print");
+
+        }else
+        {
+            modelAndView.setViewName("redirect:/login");
+        }
+        return modelAndView;
+    }
 }

@@ -39,10 +39,32 @@ public class RestPostController {
         }
     }
 
+    @GetMapping("/top")
+    public ResponseEntity<?> getTopPosts(HttpSession session) {
+      //  if (session.getAttribute("username") != null) {
+            List<PostServiceModel> model = postService.getTopPost();
+            return new ResponseEntity<>(model.stream().map(p -> this.modelMapper.map(p, RestPostBindingModel.class)), HttpStatus.OK);
+        //} else {
+          //  return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        //}
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getPostById(@PathVariable(name = "id") Long id, HttpSession session) {
         if (session.getAttribute("username") != null) {
             PostServiceModel post = postService.getPostById(id);
+
+            return new ResponseEntity<>(this.modelMapper.map(post, RestPostBindingModel.class), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("category/{id}")
+    public ResponseEntity<?> getPostByCategoryId(@PathVariable(name = "id") Long id, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            List<PostServiceModel> post = postService.getPostByCategoryId(id);
+
 
             return new ResponseEntity<>(this.modelMapper.map(post, RestPostBindingModel.class), HttpStatus.OK);
         } else {
@@ -80,6 +102,45 @@ public class RestPostController {
             return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
         }
     }
+
+    @GetMapping("/like")
+    public ResponseEntity<?> getLike(@PathVariable(name = "postId") Long postId, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            return new ResponseEntity<>(postService.getLike(postId), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/dislike")
+    public ResponseEntity<?> getDislike(@PathVariable(name = "postId") Long postId, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            return new ResponseEntity<>(postService.getDislike(postId), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
+    }
+
+
+    @PostMapping("/like")
+    public ResponseEntity<?> addLike(@PathVariable(name = "postId") Long postId, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            return new ResponseEntity<>(postService.addLike(postId), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @PostMapping("/dislike")
+    public ResponseEntity<?> addDislike(@PathVariable(name = "postId") Long postId, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            return new ResponseEntity<>(postService.addDislike(postId), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("no login user", HttpStatus.FORBIDDEN);
+        }
+    }
+
+
 
 
 }

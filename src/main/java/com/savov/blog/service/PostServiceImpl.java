@@ -39,6 +39,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<PostServiceModel> getTopPost() {
+        List<Post> posts = postRepository.findTop5ByOrderByLikeCountDesc();
+        return posts.stream().map(p->this.modelMapper.map(p,PostServiceModel.class)).collect(Collectors.toList());
+    }
+
+    @Override
     public List<PostServiceModel> getPostByUserId(Long id) {
         List<Post> posts = postRepository.findByUserId(id);
         return posts.stream().map(p->this.modelMapper.map(p,PostServiceModel.class)).collect(Collectors.toList());
@@ -86,5 +92,38 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.findById(id).orElse(null);
         postRepository.deleteById(id);
         return this.modelMapper.map(post,PostServiceModel.class);
+    }
+
+    @Override
+    public List<PostServiceModel> getPostByCategoryId(Long categoryId) {
+        List<Post> posts = postRepository.findByCategoryId(categoryId);
+        return posts.stream().map(p->this.modelMapper.map(p,PostServiceModel.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Long getLike(Long postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+        return post.getLikeCount();
+    }
+
+    @Override
+    public Long getDislike(Long postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+        return post.getDislikeCount();
+    }
+
+    @Override
+    public PostServiceModel addLike(Long postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+        post.setLikeCount(post.getLikeCount()+1);
+        return this.modelMapper.map(postRepository.save(post),PostServiceModel.class);
+    }
+
+
+    @Override
+    public PostServiceModel addDislike(Long postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+        post.setDislikeCount(post.getDislikeCount()+1);
+        return this.modelMapper.map(postRepository.save(post),PostServiceModel.class);
     }
 }

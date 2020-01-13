@@ -11,4 +11,9 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
 
     List<Post> findByUserId(Long id);
+
+    List<Post> findByCategoryId(Long id);
+
+    List<Post> findTop5ByOrderByLikeCountDesc();
+
 }
