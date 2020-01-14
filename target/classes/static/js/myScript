@@ -1,0 +1,140 @@
+//get input
+var firstName = document.getElementById("firstName");
+var lastName = document.getElementById("lastName");
+var username = document.getElementById("username");
+var password = document.getElementById("password");
+var confirmPassword = document.getElementById("confirm_password");
+var email = document.getElementById("email");
+var address = document.getElementById("address");
+
+//get help labels
+var firstNameHelp = document.getElementById("firstNameHelp");
+var lastNameHelp = document.getElementById("lastNameHelp");
+var usernameHelp = document.getElementById("usernameHelp");
+var passwordHelp = document.getElementById("passwordHelp");
+var confirmPasswordHelp = document.getElementById("confirmPasswordHelp");
+var emailHelp = document.getElementById("emailHelp");
+var addressHelp = document.getElementById("addressHelp");
+
+
+var nameValidator = /[A-Z][a-z]+/g;
+var usernameValidator = /^([a-zA-Z0-9_]+)$/g;
+var passwordValidator = /^([a-zA-Z0-9_]+){8,}$/g;
+var emaiValidator = /^([a-zA-Z0-9_]+@[a-zA-Z]+\.[a-zA-Z]+)$/g;
+
+firstName.onkeyup = function() {
+   if(!firstName.value.match(nameValidator)){
+         firstNameHelp.textContent = "First name is invalid";
+         firstName.classList.add("is-invalid");
+    }else{
+        firstNameHelp.textContent = "";
+         firstName.classList.remove("is-invalid");
+    }
+}
+
+lastName.onkeyup = function() {
+   if(!lastName.value.match(nameValidator)){
+         lastNameHelp.textContent = "Last name is invalid";
+          lastName.classList.add("is-invalid");
+    }else{
+        lastNameHelp.textContent = "";
+     lastName.classList.remove("is-invalid");
+    }
+}
+
+
+username.onkeyup = function() {
+   if(!username.value.match(usernameValidator)){
+         usernameHelp.textContent = "Username is invalid";
+          username.classList.add("is-invalid");
+    }else{
+        usernameHelp.textContent = "";
+        username.classList.remove("is-invalid");
+    }
+}
+
+password.onkeyup = function() {
+   if(!password.value.match(passwordValidator)){
+         passwordHelp.textContent = "Password is invalid";
+          password.classList.add("is-invalid");
+    }else{
+        passwordHelp.textContent = "";
+        password.classList.remove("is-invalid");
+    }
+}
+
+confirmPassword.onkeyup = function() {
+   if(confirmPassword.value == password.value){
+         confirmPasswordHelp.textContent = "";
+          confirmPassword.classList.remove("is-invalid");
+    }else{
+        confirmPasswordHelp.textContent = "Confirm password is invalid";
+        confirmPassword.classList.add("is-invalid");
+    }
+}
+
+email.onkeyup = function() {
+     if(!email.value.match(emaiValidator)){
+            emailHelp.textContent = "Password is invalid";
+             email.classList.add("is-invalid");
+       }else{
+           emailHelp.textContent = "";
+           email.classList.remove("is-invalid");
+       }
+}
+
+
+//
+//
+//
+//// When the user clicks on the password field, show the message box
+//myInput.onfocus = function() {
+//  document.getElementById("message").style.display = "block";
+//}
+//
+//// When the user clicks outside of the password field, hide the message box
+//myInput.onblur = function() {
+//  document.getElementById("message").style.display = "none";
+//}
+//
+//// When the user starts to type something inside the password field
+//myInput.onkeyup = function() {
+//  // Validate lowercase letters
+//  var lowerCaseLetters = /[a-z]/g;
+//  if(myInput.value.match(lowerCaseLetters)) {
+//    letter.classList.remove("invalid");
+//    letter.classList.add("valid");
+//  } else {
+//    letter.classList.remove("valid");
+//    letter.classList.add("invalid");
+//  }
+//
+//  // Validate capital letters
+//  var upperCaseLetters = /[A-Z]/g;
+//  if(myInput.value.match(upperCaseLetters)) {
+//    capital.classList.remove("invalid");
+//    capital.classList.add("valid");
+//  } else {
+//    capital.classList.remove("valid");
+//    capital.classList.add("invalid");
+//  }
+//
+//  // Validate numbers
+//  var numbers = /[0-9]/g;
+//  if(myInput.value.match(numbers)) {
+//    number.classList.remove("invalid");
+//    number.classList.add("valid");
+//  } else {
+//    number.classList.remove("valid");
+//    number.classList.add("invalid");
+//  }
+//
+//  // Validate length
+//  if(myInput.value.length >= 8) {
+//    length.classList.remove("invalid");
+//    length.classList.add("valid");
+//  } else {
+//    length.classList.remove("valid");
+//    length.classList.add("invalid");
+//  }
+//}
