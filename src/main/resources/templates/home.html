@@ -2,10 +2,10 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="fragments/head"></th:block>
+
 <body>
 
 <th:block th:replace="fragments/navbar"></th:block>
-
 
 <main>
 
@@ -13,6 +13,7 @@
 
         <h1>Top posts</h1>
         <hr class="bg-blog hr-2"/>
+
         <th:block th:each="post:${topPosts}">
             <div class="card">
                 <h5 class="card-header font-weight-bold" th:text="${post.title}"></h5>
@@ -26,8 +27,11 @@
         </th:block>
 
         <hr class="bg-blog hr-2 mt-5"/>
+
     </div>
+
 </main>
+
 <th:block th:replace="fragments/footer"></th:block>
 
 </body>

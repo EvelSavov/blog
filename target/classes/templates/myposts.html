@@ -5,15 +5,14 @@
 <body>
 <th:block th:replace="fragments/navbar"></th:block>
 
-
 <main>
+
     <div class="container text-center w-50">
+
+        <h1>My posts</h1>
         <hr class="bg-blog hr-2"/>
-        <!--        <div class="print-container container-fluid">-->
-        <!--            <div class="row mb-4 d-flex flex-wrap">-->
+
         <th:block th:each="document:${documents}">
-
-
             <div class="card ">
                 <h5 class="card-header font-weight-bold" th:text="${document.title}"></h5>
                 <div class="card-body">
@@ -26,24 +25,12 @@
                 </div>
             </div>
             <br/>
-<!--            <div class="print-scheduled home-doc bg-blog rounded w-50">-->
-<!--                <h5 class="text-center text-white font-weight-bold py-3 mt-3" th:text="${document.title}"></h5>-->
-<!--                <hr class="bg-white">-->
-<!--                <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">-->
-<!--                    <a th:href="@{/print/{id}(id=${document.id})}"-->
-<!--                       class="btn bg-blog text-white font-weight-bold mb-3">Read Post</a>-->
-<!--                    <a th:href="@{/delete/{id}(id=${document.id})}"-->
-<!--                       class="btn bg-blog text-white font-weight-bold mb-3">Delete Post</a>-->
-<!--                    <a th:href="@{/update/{id}(id=${document.id})}"-->
-<!--                       class="btn bg-blog text-white font-weight-bold mb-3">Update Post</a>-->
-
-<!--                </div>-->
-<!--            </div>-->
         </th:block>
-        <!--            </div>-->
-        <!--        </div>-->
+
         <hr class="bg-blog hr-2 mt-5"/>
+
     </div>
+
 </main>
 
 <th:block th:replace="fragments/footer"></th:block>

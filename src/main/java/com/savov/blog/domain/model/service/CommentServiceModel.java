@@ -5,6 +5,8 @@ import com.savov.blog.domain.entities.Post;
 
 public class CommentServiceModel {
 
+    private Long id;
+
     private String body;
 
     private PostServiceModel post;
@@ -13,6 +15,14 @@ public class CommentServiceModel {
 
 
     public CommentServiceModel() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getBody() {

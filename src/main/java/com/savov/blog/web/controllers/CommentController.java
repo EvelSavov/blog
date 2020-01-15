@@ -35,6 +35,17 @@ public class CommentController {
         return modelAndView;
     }
 
+    @GetMapping("comment/delete/{id}")
+    public ModelAndView deleteComment(@PathVariable(name = "id")Long commentId,ModelAndView modelAndView ,HttpSession session){
+        if(session.getAttribute("username")!=null) {
+            commentService.deleteComments(commentId);
+            modelAndView.setViewName("redirect:/mycomments");
+        }else {
+            modelAndView.setViewName("redirect:/login");
+        }
+        return modelAndView;
+    }
+
     @GetMapping("/mycomments")
     public ModelAndView myComments(ModelAndView modelAndView,HttpSession session) {
         if(session.getAttribute("username")!=null) {

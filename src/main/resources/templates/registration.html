@@ -4,70 +4,88 @@
 <th:block th:replace="fragments/head"></th:block>
 
 <body>
+
 <th:block th:replace="fragments/navbar"></th:block>
-<div class="container-fluid">
-    <main class="mt-3">
+
+<main>
+
+    <div class="container text-center">
+
+        <h1>Registration</h1>
+        <hr class="bg-blog hr-2"/>
+
         <form class="mx-auto w-75" th:method="post" th:action="@{/registration}">
+
             <div class="form-group">
-                <div class="label-center d-flex justify-content-center">
+                <div class="justify-content-center">
                     <label for="firstName" class="text-blog h3">Firs Name</label>
                 </div>
                 <small id="firstNameHelp" class="text-danger"></small>
                 <input type="text" class="form-control " id="firstName" placeholder="First name..." name="firstName"/>
             </div>
+
             <div class="form-group">
-                <div class="label-center d-flex justify-content-center">
+                <div class="justify-content-center">
                     <label for="lastName" class="text-blog h3">Last name</label>
                 </div>
                 <small id="lastNameHelp" class="text-danger"></small>
                 <input type="text" class="form-control" id="lastName" placeholder="LastName..." name="lastName"/>
             </div>
+
             <div class="form-group">
-                <div class="label-center d-flex justify-content-center">
+                <div class="justify-content-center">
                     <label for="username" class="text-blog h3">Username</label>
                 </div>
                 <small id="usernameHelp" class="text-danger"></small>
                 <input type="text" class="form-control" id="username" placeholder="Username..." name="username"/>
             </div>
+
             <div class="form-group">
-                <div class="label-center d-flex justify-content-center">
+                <div class="justify-content-center">
                     <label for="password" class="text-blog h3">Password</label>
                 </div>
                 <small id="passwordHelp" class="text-danger"></small>
                 <input type="password" class="form-control" id="password" placeholder="Password..." name="password"/>
             </div>
+
             <div class="form-group">
-                <div class="label-center d-flex justify-content-center">
+                <div class="justify-content-center">
                     <label for="confirm_password" class="text-blog h3">Confirm password</label>
                 </div>
                 <small id="confirmPasswordHelp" class="text-danger"></small>
                 <input type="password" class="form-control" id="confirm_password" placeholder="confirm_password..."
                        name="confirm_password"/>
             </div>
+
             <div class="form-group">
-                <div class="label-center d-flex justify-content-center">
+                <div class="justify-content-center">
                     <label for="email" class="text-blog h3">Email</label>
                 </div>
                 <small id="emailHelp" class="text-danger"></small>
                 <input type="text" class="form-control" id="email" placeholder="Email..." name="email"/>
             </div>
+
             <div class="form-group">
-                <div class="label-center d-flex justify-content-center">
+                <div class="justify-content-center">
                     <label for="address" class="text-blog h3">Address</label>
                 </div>
                 <small id="addressHelp" class="text-danger"></small>
                 <input type="address" class="form-control" id="address" placeholder="Address..." name="address"/>
             </div>
+
             <hr class="bg-blog hr-2"/>
-            <div class="button-holder d-flex justify-content-center">
+
+            <div class="justify-content-center">
                 <button type="submit" class="btn bg-blog text-white">Register</button>
             </div>
+
             <hr class="bg-blog hr-2"/>
-<!--            <hr class="bg-blog hr-2"/>-->
-<!--            <a th:href="@{/login}">Login</a>-->
+
         </form>
-    </main>
-</div>
+
+    </div>
+
+</main>
 <th:block th:replace="fragments/footer"></th:block>
 </body>
 <script th:src="@{/js/myScript}"></script>

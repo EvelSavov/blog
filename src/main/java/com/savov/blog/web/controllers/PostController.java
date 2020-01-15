@@ -2,6 +2,7 @@ package com.savov.blog.web.controllers;
 
 import com.savov.blog.domain.model.binding.PostBindingModel;
 import com.savov.blog.domain.model.service.PostServiceModel;
+import com.savov.blog.service.CategoryService;
 import com.savov.blog.service.CommentService;
 import com.savov.blog.service.PostService;
 import org.modelmapper.ModelMapper;
@@ -20,12 +21,14 @@ public class PostController {
     private final PostService postService;
     private final ModelMapper modelMapper;
     private final CommentService commentService;
+    private final CategoryService categoryService;
 
 
-    public PostController(PostService postService, ModelMapper modelMapper, CommentService commentService) {
+    public PostController(PostService postService, ModelMapper modelMapper, CommentService commentService, CategoryService categoryService) {
         this.postService = postService;
         this.modelMapper = modelMapper;
         this.commentService = commentService;
+        this.categoryService = categoryService;
     }
 
 
@@ -63,6 +66,7 @@ public class PostController {
     public ModelAndView addPost(ModelAndView modelAndView, HttpSession session) {
         if(session.getAttribute("username")!=null) {
             modelAndView.setViewName("addpost");
+            modelAndView.addObject("categories", categoryService.getAllCategories());
         }else{
             modelAndView.setViewName("redirect:/login");
         }
@@ -86,6 +90,7 @@ public class PostController {
     public ModelAndView update(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
         if(session.getAttribute("username")!=null) {
             modelAndView.addObject("post", postService.getPostById(id));
+            modelAndView.addObject("categories",categoryService.getAllCategories());
             modelAndView.setViewName("update");
 
         }else{

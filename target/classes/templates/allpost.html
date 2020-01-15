@@ -11,6 +11,7 @@
 
         <h1>All posts</h1>
         <hr class="bg-blog hr-2"/>
+
         <th:block th:each="post:${posts}">
             <div class="card">
                 <h5 class="card-header font-weight-bold" th:text="${post.title}"></h5>
@@ -24,7 +25,9 @@
         </th:block>
 
         <hr class="bg-blog hr-2 mt-5"/>
+
     </div>
+
 </main>
 
 <th:block th:replace="fragments/footer"></th:block>

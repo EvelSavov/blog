@@ -5,31 +5,67 @@
 <body>
 
 <th:block th:replace="fragments/navbar"></th:block>
-<div class="container-fluid">
-    <main class="mt-3">
-        <form class="mx-auto w-75" th:method="post" th:action="@{/login}">
+<main>
+
+    <div class="container text-center w-50">
+
+        <form class="mx-auto " th:method="post" th:action="@{/login}">
+
+            <h1>Login</h1>
+            <hr class="bg-blog hr-2"/>
+
             <div class="form-group">
-                <div class="label-center d-flex justify-content-center">
+                <div class=" justify-content-center">
                     <label for="username" class="text-blog h3">Username</label>
                 </div>
                 <input type="text" class="form-control" id="username" placeholder="Username..." name="username"/>
             </div>
+
             <div class="form-group">
-                <div class="label-center d-flex justify-content-center">
+                <div class=" justify-content-center">
                     <label for="password" class="text-blog h3">Password</label>
                 </div>
                 <input type="password" class="form-control" id="password" placeholder="Password..." name="password"/>
             </div>
-            <hr class="bg-blog hr-2"/>
-            <div class="button-holder d-flex justify-content-center">
+
+            <div class="justify-content-center">
                 <button type="submit" class="btn bg-blog text-white">Login</button>
             </div>
-<!--            <hr class="bg-blog hr-2"/>-->
-<!--            <a th:href="@{/registration}">Registration</a>-->
-            <hr class="bg-blog hr-2"/>
+
         </form>
-    </main>
-</div>
+
+    </div>
+
+</main>
+
+<br/>
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/> <br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 <th:block th:replace="fragments/footer"></th:block>
 </body>
 </html>
