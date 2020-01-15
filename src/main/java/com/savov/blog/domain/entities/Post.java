@@ -39,8 +39,8 @@ public class Post extends BaseEntity  {
         this.title = title;
     }
 
-    @Lob
-    @Column(name = "body", columnDefinition = "text",nullable = false)
+
+    @Column(name = "body", columnDefinition = "LONGTEXT",nullable = false)
     public String getBody() {
         return body;
     }
