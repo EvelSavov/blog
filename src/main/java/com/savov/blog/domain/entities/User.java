@@ -31,6 +31,7 @@ public class User extends BaseEntity {
     public User() {
     }
 
+
     @Column(name = "first_name", nullable = false)
     public String getFirstName() {
         return firstName;

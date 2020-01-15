@@ -1,69 +1,88 @@
 <!DOCTYPE html>
-<html lang="en"xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="fragments/head"></th:block>
 <body>
 <th:block th:replace="fragments/navbar"></th:block>
-<div class="container-fluid">
-    <main class="mt-3">
-        <hr class="bg-blog hr-2"/>
-        <h1 class="text-center text-blog" th:text="'Document - '+ ${post.id}"></h1>
-        <hr class="bg-blog hr-2 w-75"/>
-        <!--        <form class="mx-auto w-75" th:method="post" th:action="@{/print/{id}(id=${post.id})}">-->
-        <div class="form-group">
-            <div class="label-center d-flex justify-content-center">
-                <label for="title" class="text-blog h3">Title</label>
+
+<div class="container">
+    <main>
+        <br/>
+        <br/>
+
+        <div class="card">
+            <h5 class="card-header font-weight-bold" th:text="${post.title}"></h5>
+            <div class="card-body">
+                <h5 class="card-title" th:text="${post.body}"></h5>
+                <hr class="bg-blog hr-2"/>
+                <p class="card-text text-light" th:text="${'Author ' + post.user.username}"></p>
+                <p class="card-text text-light" th:text="${'Like ' + post.likeCount}"></p>
+                <p class="card-text text-light" th:text="${'Dislike ' + post.dislikeCount}"></p>
+                <!--                <a th:href="@{/print/{id}(id=${post.id})}" class="btn btn-secondary">Read post</a>-->
             </div>
-            <input type="text" class="form-control" id="title" placeholder="Title..." name="title"
-                   th:value="${post.title}" disabled/>
         </div>
-        <div class="form-group">
-            <div class="label-center d-flex justify-content-center">
-                <label for="content" class="text-blog h3">Content</label>
-            </div>
-            <textarea class="form-control" id="content" name="content" rows="10" disabled
-                      th:text="${post.body}"></textarea>
-        </div>
-        <hr class="bg-blog hr-2"/>
+
+
+        <!--        <div class="form-group">-->
+        <!--            <br/>-->
+        <!--            <div class="label-center d-flex justify-content-center">-->
+        <!--                <label for="title" class="text-blog h3">Title</label>-->
+        <!--            </div>-->
+        <!--            <input type="text" class="form-control" id="title" placeholder="Title..." name="title"-->
+        <!--                   th:value="${post.title}" disabled/>-->
+        <!--        </div>-->
+        <!--        <div class="form-group">-->
+        <!--            <div class="label-center d-flex justify-content-center">-->
+        <!--                <label for="content" class="text-blog h3">Content</label>-->
+        <!--            </div>-->
+        <!--            <textarea class="form-control" id="content" name="content" rows="10" disabled-->
+        <!--                      th:text="${post.body}"></textarea>-->
+        <!--        </div>-->
+        <!--        <div class="form-group">-->
+        <!--            <div class="label-center d-flex justify-content-center">-->
+        <!--                <label for="title" class="text-blog h3">Author</label>-->
+        <!--            </div>-->
+        <!--            <input type="text" class="form-control" id="title" placeholder="Title..." name="title"-->
+        <!--                   th:value="${post.user.username}" disabled/>-->
+        <!--            <input type="text" class="form-control" id="title" placeholder="Title..." name="title"-->
+        <!--                   th:value="${post.likeCount}" disabled/>-->
+        <!--            <input type="text" class="form-control" id="title" placeholder="Title..." name="title"-->
+        <!--                   th:value="${post.dislikeCount}" disabled/>-->
+        <!--        </div>-->
+        <!--        <hr class="bg-blog hr-2"/>-->
+
+        <br/>
+        <br/>
         <form class="mx-auto w-75" th:method="post" th:action="@{/addcomment/{postid}(postid=${post.id})}">
-            <div class="label-center d-flex justify-content-center">
-                <label for="body" class="text-blog h3">add comment</label>
+
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <a class="btn btn-secondary btn-outline-dark rounded" th:href="@{/print/like/{id}(id=${post.id})}">&#128077;&#127995;</a>
+                    <a class="btn btn-secondary btn-outline-dark rounded"
+                       th:href="@{/print/dislike/{id}(id=${post.id})}">&#128078;&#127995;</a>
+                    <input class="btn btn-secondary btn-outline-dark rounded" type="submit"
+                           value="comment &#9997;&#127995;"/>
+                </div>
+                <input type="text" class="form-control" id="body" placeholder="add comment..." name="body"/>
             </div>
-            <input type="text" class="form-control" id="body" placeholder="comment..." name="body"/>
-<!--            <div class="label-center d-flex justify-content-center">-->
-<!--                <label for="user" class="text-blog h3">user</label>-->
-<!--            </div>-->
-<!--            <input type="text" class="form-control" id="user" placeholder="user..." name="user"/>-->
-            <input type="submit" value="comment"/>
-
-
         </form>
-        <div class="form-group">
-            <div class="label-center d-flex justify-content-center">
-                <label for="title" class="text-blog h3">Author</label>
+
+        <hr class="bg-blog hr-2"/>
+        <div class="label-center d-flex justify-content-center">
+            <label for="body" class="text-blog h3">Comments</label>
+        </div>
+        <div class="container w-50">
+            <th:block th:each="comment:${post.comments}">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${comment.body}"></h5>
+                </div>
             </div>
-            <input type="text" class="form-control" id="title" placeholder="Title..." name="title"
-                   th:value="${post.user.username}" disabled/>
-            <input type="text" class="form-control" id="title" placeholder="Title..." name="title"
-                   th:value="${post.likeCount}" disabled/>
-            <input type="text" class="form-control" id="title" placeholder="Title..." name="title"
-                   th:value="${post.dislikeCount}" disabled/>
+                <br/>
+            </th:block>
         </div>
 
-        <th:block th:each="comment:${post.comments}">
-            <div class="print-scheduled home-doc bg-blog rounded">
-                <h5 class="text-center text-white font-weight-bold py-3 mt-3" th:text="${comment.body}"></h5>
-
-            </div>
-        </th:block>
-        <hr class="bg-blog hr-2"/>
-
-
-        <a th:href="@{/print/like/{id}(id=${post.id})}">like</a>
-        <a th:href="@{/print/dislike/{id}(id=${post.id})}">dislike</a>
-
-        <!--        </form>-->
-        <hr class="bg-blog hr-2 mt-5"/>
     </main>
 </div>
 <th:block th:replace="fragments/footer"></th:block>

@@ -94,4 +94,5 @@ public class PostServiceModel {
     public void setComments(List<CommentServiceModel> comments) {
         this.comments = comments;
     }
+
 }

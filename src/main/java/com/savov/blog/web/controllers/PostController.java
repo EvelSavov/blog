@@ -31,7 +31,7 @@ public class PostController {
 
     @GetMapping("/allpost")
     public ModelAndView allPost(ModelAndView modelAndView) {
-        modelAndView.addObject("documents",postService.getAll());
+        modelAndView.addObject("posts",postService.getAll());
         modelAndView.setViewName("allpost");
         return modelAndView;
     }

@@ -5,40 +5,29 @@
 <body>
 
 <th:block th:replace="fragments/navbar"></th:block>
-<div class="container-fluid">
 
-    <main class="mt-3">
 
+<main>
+
+    <div class="container text-center">
+
+        <h1>Top posts</h1>
         <hr class="bg-blog hr-2"/>
-        <div class="print-container container-fluid">
-            <div class="row mb-4 d-flex flex-wrap">
-
-                <div class="print-scheduled home-doc bg-blog rounded">
-                    <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
-                        <H3>Top 1</H3>
-                    </div>
+        <th:block th:each="post:${topPosts}">
+            <div class="card">
+                <h5 class="card-header font-weight-bold" th:text="${post.title}"></h5>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${#strings.substring(post.body,0,50) + '...'}"></h5>
+                    <p class="card-text text-light" th:text="${'Author ' + post.user.username}"></p>
+                    <a th:href="@{/print/{id}(id=${post.id})}" class="btn btn-secondary">Read post</a>
                 </div>
-
-                <div class="print-scheduled home-doc bg-blog rounded">
-                    <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
-                        <H3>Top 1</H3>
-
-                    </div>
-                </div>
-
-                <div class="print-scheduled home-doc bg-blog rounded">
-                    <div class="buttons-holder w-75 mx-auto d-flex justify-content-between">
-                        <H3>Top 1</H3>
-                    </div>
-                </div>
-
             </div>
-        </div>
+            <br/>
+        </th:block>
+
         <hr class="bg-blog hr-2 mt-5"/>
-    </main>
-
-</div>
-
+    </div>
+</main>
 <th:block th:replace="fragments/footer"></th:block>
 
 </body>

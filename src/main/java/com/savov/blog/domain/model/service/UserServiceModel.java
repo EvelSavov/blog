@@ -114,4 +114,5 @@ public class UserServiceModel {
     public void setComments(List<CommentServiceModel> comments) {
         this.comments = comments;
     }
+
 }

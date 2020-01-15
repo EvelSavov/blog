@@ -38,4 +38,5 @@ public class CommentServiceModel {
     public void setUser(String user) {
         this.user = user;
     }
+
 }

@@ -6,22 +6,45 @@ body:before {
     position: fixed;
     width: 100vw;
     height: 100vh;
+   // background-image: url("https://images.unsplash.com/photo-1516053256215-94022213b13c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80   ");
     background-image: url("https://images.unsplash.com/photo-1488998427799-e3362cec87c3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80");
     background-position: center center;
     background-repeat: no-repeat;
     background-position: 100% 100%;
     background-size: cover;
-    filter: blur(8px);
+    filter: blur(5px);
     z-index: -9;
 }
-.bg-blog {
-   background-color: rgba(0,0,0, 0.4)
+.bg-blog, .card{
+   background-color: rgba(100,100,100, 0.6);
 }
 
 .text-blog {
     color: #191970;
-
 }
+
+.form-control{
+    background-color: rgba(100,100,100, 0.6);
+    color:    #000;
+}
+
+.form-control[disabled]{
+    background-color: rgba(100,100,100, 0.6);
+    color:    #000;
+                       }
+
+input[type="text"]:disabled{
+    background-color: rgba(100,100,100, 0.6);
+        color:    #000;
+}
+
+.form-control::-webkit-input-placeholder {
+  color: #000;
+}
+.form-control::-webkit-input-placeholder {
+  color: #000;
+}
+
 
 .hr-2 {
     height: 2px;
@@ -36,14 +59,6 @@ textarea {
 	width: 16%;
 	margin: 0% 4% 1% 0%;
 }
-
-
-
-
-.form-control{
-    background-color: rgba(0,0,0, 0.4)
-}
-
 
 
 
