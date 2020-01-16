@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserServiceModel loginUser(UserLoginBindingModel userLoginBindingModel) {
         User user =  userRepository.findByUsername(userLoginBindingModel.getUsername());
-        if((user!=null)&& (this.bCryptPasswordEncoder.matches(userLoginBindingModel.getPassword(),user.getPassword())))
+        if((user!=null) && (user.getUsername().equals(userLoginBindingModel.getUsername())) && (this.bCryptPasswordEncoder.matches(userLoginBindingModel.getPassword(),user.getPassword())))
         {
             return this.modelMapper.map(user,UserServiceModel.class);
         }else return null;

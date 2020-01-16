@@ -18,6 +18,7 @@ public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
+
     public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
         this.modelMapper = modelMapper;
@@ -32,15 +33,17 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView loginConfirm(@ModelAttribute UserLoginBindingModel userLoginBindingModel, ModelAndView modelAndView, HttpSession session){
+    public ModelAndView loginConfirm(@ModelAttribute UserLoginBindingModel userLoginBindingModel, ModelAndView modelAndView, HttpSession session) {
 
-        User user = this.modelMapper.map(userService.loginUser(userLoginBindingModel),User.class);
-        if(user!=null){
-            session.setAttribute("id",user.getId());
-            session.setAttribute("username",user.getUsername());
+        UserServiceModel userServiceModel = userService.loginUser(userLoginBindingModel);
+        if (userServiceModel != null) {
+            User user = this.modelMapper.map(userServiceModel, User.class);
+            session.setAttribute("id", user.getId());
+            session.setAttribute("username", user.getUsername());
             modelAndView.setViewName("redirect:/");
-        }else {
+        } else {
             modelAndView.setViewName("redirect:/login");
+
         }
         return modelAndView;
     }
@@ -54,7 +57,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public ModelAndView registerConfirm(@ModelAttribute User user, ModelAndView modelAndView){
+    public ModelAndView registerConfirm(@ModelAttribute User user, ModelAndView modelAndView) {
         userService.addUser(this.modelMapper.map(user, UserServiceModel.class));
 
         modelAndView.setViewName("redirect:/login");
@@ -62,8 +65,8 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public ModelAndView logout(ModelAndView modelAndView,HttpSession session){
-        if(session.getAttribute("username")!=null) {
+    public ModelAndView logout(ModelAndView modelAndView, HttpSession session) {
+        if (session.getAttribute("username") != null) {
             session.invalidate();
         }
         modelAndView.setViewName("redirect:/login");
@@ -72,7 +75,7 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public ModelAndView myProfile(ModelAndView modelAndView,HttpSession session) {
+    public ModelAndView myProfile(ModelAndView modelAndView, HttpSession session) {
         if (session.getAttribute("username") != null) {
             modelAndView.addObject("user", userService.getUserByUsername((String) session.getAttribute("username")));
             modelAndView.setViewName("profile");
