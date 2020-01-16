@@ -16,14 +16,16 @@ var confirmPasswordHelp = document.getElementById("confirmPasswordHelp");
 var emailHelp = document.getElementById("emailHelp");
 var addressHelp = document.getElementById("addressHelp");
 
+//Regex
+var nameRegex = /[A-Z][a-z]*/g;
+var usernameRegex = /^([a-zA-Z0-9_]+)$/g;
+var passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/g;
+var emaiRegex = /^([a-zA-Z0-9_]+@[a-zA-Z]+\.[a-zA-Z]+)(\.[a-zA-Z]+)*$/g;
 
-var nameValidator = /[A-Z][a-z]+/g;
-var usernameValidator = /^([a-zA-Z0-9_]+)$/g;
-var passwordValidator = /^([a-zA-Z0-9_]+){8,}$/g;
-var emaiValidator = /^([a-zA-Z0-9_]+@[a-zA-Z]+\.[a-zA-Z]+)$/g;
 
-firstName.onkeyup = function() {
-   if(!firstName.value.match(nameValidator)){
+//functions
+function firstNameValidator() {
+   if(!firstName.value.match(nameRegex)){
          firstNameHelp.textContent = "First name is invalid";
          firstName.classList.add("is-invalid");
     }else{
@@ -32,8 +34,8 @@ firstName.onkeyup = function() {
     }
 }
 
-lastName.onkeyup = function() {
-   if(!lastName.value.match(nameValidator)){
+function lastNameValidator(){
+   if(!lastName.value.match(nameRegex)){
          lastNameHelp.textContent = "Last name is invalid";
           lastName.classList.add("is-invalid");
     }else{
@@ -41,10 +43,8 @@ lastName.onkeyup = function() {
      lastName.classList.remove("is-invalid");
     }
 }
-
-
-username.onkeyup = function() {
-   if(!username.value.match(usernameValidator)){
+function usernameValidator() {
+   if(!username.value.match(usernameRegex)){
          usernameHelp.textContent = "Username is invalid";
           username.classList.add("is-invalid");
     }else{
@@ -53,8 +53,8 @@ username.onkeyup = function() {
     }
 }
 
-password.onkeyup = function() {
-   if(!password.value.match(passwordValidator)){
+function passwordValidator() {
+   if(!password.value.match(passwordRegex)){
          passwordHelp.textContent = "Password is invalid";
           password.classList.add("is-invalid");
     }else{
@@ -62,8 +62,7 @@ password.onkeyup = function() {
         password.classList.remove("is-invalid");
     }
 }
-
-confirmPassword.onkeyup = function() {
+function confirmPasswordValidator() {
    if(confirmPassword.value == password.value){
          confirmPasswordHelp.textContent = "";
           confirmPassword.classList.remove("is-invalid");
@@ -72,9 +71,8 @@ confirmPassword.onkeyup = function() {
         confirmPassword.classList.add("is-invalid");
     }
 }
-
-email.onkeyup = function() {
-     if(!email.value.match(emaiValidator)){
+function emailValidator() {
+     if(!email.value.match(emaiRegex)){
             emailHelp.textContent = "Password is invalid";
              email.classList.add("is-invalid");
        }else{
@@ -84,57 +82,22 @@ email.onkeyup = function() {
 }
 
 
-//
-//
-//
-//// When the user clicks on the password field, show the message box
-//myInput.onfocus = function() {
-//  document.getElementById("message").style.display = "block";
-//}
-//
-//// When the user clicks outside of the password field, hide the message box
-//myInput.onblur = function() {
-//  document.getElementById("message").style.display = "none";
-//}
-//
-//// When the user starts to type something inside the password field
-//myInput.onkeyup = function() {
-//  // Validate lowercase letters
-//  var lowerCaseLetters = /[a-z]/g;
-//  if(myInput.value.match(lowerCaseLetters)) {
-//    letter.classList.remove("invalid");
-//    letter.classList.add("valid");
-//  } else {
-//    letter.classList.remove("valid");
-//    letter.classList.add("invalid");
-//  }
-//
-//  // Validate capital letters
-//  var upperCaseLetters = /[A-Z]/g;
-//  if(myInput.value.match(upperCaseLetters)) {
-//    capital.classList.remove("invalid");
-//    capital.classList.add("valid");
-//  } else {
-//    capital.classList.remove("valid");
-//    capital.classList.add("invalid");
-//  }
-//
-//  // Validate numbers
-//  var numbers = /[0-9]/g;
-//  if(myInput.value.match(numbers)) {
-//    number.classList.remove("invalid");
-//    number.classList.add("valid");
-//  } else {
-//    number.classList.remove("valid");
-//    number.classList.add("invalid");
-//  }
-//
-//  // Validate length
-//  if(myInput.value.length >= 8) {
-//    length.classList.remove("invalid");
-//    length.classList.add("valid");
-//  } else {
-//    length.classList.remove("valid");
-//    length.classList.add("invalid");
-//  }
-//}
+
+
+firstName.onkeyup =  firstNameValidator;
+lastName.onkeyup =  lastNameValidator;
+username.onkeyup =  usernameValidator;
+password.onkeyup = passwordValidator;
+confirmPassword.onkeyup = confirmPasswordValidator;
+email.onkeyup = emailValidator;
+
+document.getElementById("regBtn").onclick = function() {
+    firstNameValidator();
+    lastNameValidator();
+    usernameValidator();
+    passwordValidator();
+    confirmPasswordValidator();
+    emailValidator();
+}
+
+

@@ -18,22 +18,24 @@
                 <div class=" justify-content-center">
                     <label for="title" class="text-blog h3">Title</label>
                 </div>
+                <small id="titleHelp" class="text-danger"></small>
                 <input type="text" class="form-control" id="title" placeholder="Title..." name="title"
-                />
+                      required  maxlength="250"/>
             </div>
 
             <div class="form-group">
                 <div class=" justify-content-center">
                     <label for="body" class="text-blog h3">Content</label>
                 </div>
-                <textarea class="form-control" id="body" name="body" rows="23" placeholder="Post..."></textarea>
+                <small id="bodyHelp" class="text-danger"></small>
+                <textarea class="form-control" id="body" name="body" rows="23" placeholder="Post..." minlength="200" required></textarea>
             </div>
 
             <div class="form-group">
                 <div class=" justify-content-center">
                     <label for="category" class="text-blog h3">Category</label>
                 </div>
-                <select class="form-control" id="category" name="category">
+                <select class="form-control" id="category" name="category" required>
                     <th:block th:each="category:${categories}">
                         <option th:value="${category.id}" th:text="${category.categoryName}"></option>
                     </th:block>
@@ -42,7 +44,7 @@
             </div>
 
             <div class="justify-content-center">
-                <button type="submit" class="btn bg-blog ">Post</button>
+                <button id= "postBtn" type="submit" class="btn bg-blog ">Post</button>
             </div>
 
         </form>
@@ -54,5 +56,7 @@
 </main>
 
 <th:block th:replace="fragments/footer"></th:block>
+
 </body>
+<script th:src="@{/js/postValidationScript.js}"></script>
 </html>

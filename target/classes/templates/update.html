@@ -15,7 +15,8 @@
                 <div class="justify-content-center">
                     <label for="title" class="text-blog h3">Title</label>
                 </div>
-                <input type="text" class="form-control" id="title" th:value="${post.title}" name="title"
+                <small id="titleHelp" class="text-danger"></small>
+                <input type="text" class="form-control" id="title" th:value="${post.title}" name="title" required maxlength="250"
                 />
             </div>
 
@@ -23,7 +24,8 @@
                 <div class="justify-content-center">
                     <label for="body" class="text-blog h3">Content</label>
                 </div>
-                <textarea class="form-control" id="body" name="body" rows="10" th:text="${post.body}"></textarea>
+                <small id="bodyHelp" class="text-danger"></small>
+                <textarea class="form-control" id="body" name="body" rows="10" th:text="${post.body}"  required minlength="200"></textarea>
             </div>
 
             <hr class="bg-blog hr-2"/>
@@ -32,7 +34,7 @@
                 <div class="justify-content-center">
                     <label for="category" class="text-blog h3">Category</label>
                 </div>
-                <select class="form-control" id="category" name="category">
+                <select class="form-control" id="category" name="category" required>
                     <th:block th:each="category:${categories}">
                         <option th:value="${category.id}" th:text="${category.categoryName}"
                                 th:selected="(${category.categoryName}==${post.category})"></option>
@@ -43,7 +45,7 @@
             <hr class="bg-blog hr-2"/>
 
             <div class="justify-content-center">
-                <button type="submit" class="btn bg-blog text-white">Update</button>
+                <button  id= "postBtn" type="submit" class="btn bg-blog text-white">Update</button>
             </div>
 
             <hr class="bg-blog hr-2"/>
@@ -55,4 +57,5 @@
 </main>
 <th:block th:replace="fragments/footer"></th:block>
 </body>
+<script th:src="@{/js/postValidationScript.js}"></script>
 </html>

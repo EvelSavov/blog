@@ -26,7 +26,7 @@
 
         <br/>
         <br/>
-
+        <small id="commentHelp" class="text-danger"></small>
         <form class="mx-auto w-75" th:method="post" th:action="@{/addcomment/{postid}(postid=${post.id})}">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -34,16 +34,16 @@
                     <a class="btn btn-secondary btn-outline-dark rounded"
                        th:href="@{/print/dislike/{id}(id=${post.id})}">&#128078;&#127995;</a>
                     <input class="btn btn-secondary btn-outline-dark rounded" type="submit"
-                           value="comment &#9997;&#127995;"/>
+                           id = "commentBtn" value="comment &#9997;&#127995;"/>
                 </div>
-                <input type="text" class="form-control" id="body" placeholder="add comment..." name="body"/>
+                <input type="text" class="form-control" id="comment" placeholder="add comment..." name="body" required maxlength="250"/>
             </div>
         </form>
 
         <hr class="bg-blog hr-2"/>
 
         <div class="justify-content-center">
-            <label for="body" class="text-blog h3">Comments</label>
+            <label for="comment" class="text-blog h3">Comments</label>
         </div>
 
         <div class="container w-50">
@@ -63,4 +63,5 @@
 
 <th:block th:replace="fragments/footer"></th:block>
 </body>
+<script th:src="@{/js/commentValidationScript.js}"></script>
 </html>
