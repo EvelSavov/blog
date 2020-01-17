@@ -77,7 +77,7 @@ public class User extends BaseEntity {
         this.email = email;
     }
 
-    @Column(name = "address",nullable = false)
+    @Column(name = "address")
     public String getAddress() {
         return address;
     }

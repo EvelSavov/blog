@@ -18,14 +18,15 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${#strings.substring(post.body,0,50) + '...'}"></h5>
                     <p class="card-text text-light " th:text="${'Author ' + post.user.username}"></p>
-                    <a th:href="@{/print/{id}(id=${post.id})}" class="btn btn-secondary">Read post</a>
+                    <a th:href="@{/print/{id}(id=${post.id})}" class="btn btn-blog">Read post</a>
                 </div>
             </div>
             <br/>
         </th:block>
 
         <hr class="bg-blog hr-2 mt-5"/>
-
+        <br/>
+        <br/>
     </div>
 
 </main>

@@ -36,9 +36,6 @@ input[type="text"]:disabled{
   color: #000;
 }
 
-.form-control::-webkit-input-placeholder {
-  color: #000;
-}
 
 .hr-2 {
     height: 2px;
@@ -48,7 +45,37 @@ textarea {
     resize: none;
 }
 
-.home-doc{
-	width: 16%;
-	margin: 0% 4% 1% 0%;
+body {
+  min-height: 100vh;
+  position: relative;
+  margin: 0;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+h1{
+    text-shadow: 2px 2px gray;
+    font-variant: small-caps;
+}
+.btn-blog:hover {
+           box-shadow: 0 15px 20px 0 rgba(255,255,255,0.34), 0 20px 55px 0 rgba(255,255,255,0.29);
+}
+.btn-blog{
+
+    background-color: rgba(100,100,100, 0.6);
+      border: none;
+      color: white;
+     // padding: 15px 32px;
+      //text-align: center;
+      //text-decoration: none;
+      //display: inline-block;
+      //font-size: 16px;
+      //margin: 4px 2px;
+     // cursor: pointer;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
 }
