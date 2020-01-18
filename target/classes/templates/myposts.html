@@ -17,11 +17,11 @@
                 <h5 class="card-header font-weight-bold" th:text="${document.title}"></h5>
                 <div class="card-body">
                     <a th:href="@{/print/{id}(id=${document.id})}"
-                       class="btn bg-blog text-white font-weight-bold mb-3">Read Post</a>
+                       class="btn btn-blog text-white font-weight-bold mb-3">Read Post</a>
                     <a th:href="@{/delete/{id}(id=${document.id})}"
-                       class="btn bg-blog text-white font-weight-bold mb-3">Delete Post</a>
+                       class="btn btn-blog text-white font-weight-bold mb-3">Delete Post</a>
                     <a th:href="@{/update/{id}(id=${document.id})}"
-                       class="btn bg-blog text-white font-weight-bold mb-3">Update Post</a>
+                       class="btn btn-blog text-white font-weight-bold mb-3">Update Post</a>
                 </div>
             </div>
             <br/>
