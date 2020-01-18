@@ -22,13 +22,17 @@ body:before {
     color:    #000;
 }
 
+.card-header{
+background-color: rgba(0,0,0,0.09);
+}
+
 .form-control[disabled]{
-    background-color: rgba(100,100,100, 0.6);
+    background-color: rgba(100,100,100, 0.9);
     color:    #000;
 }
 
 input[type="text"]:disabled{
-    background-color: rgba(100,100,100, 0.6);
+    background-color: rgba(100,100,100, 0.9);
     color: #000;
 }
 
@@ -65,9 +69,11 @@ footer {
 }
 
 h1{
+     font-family:Courier;
+     font-style: italic;
      text-shadow: 3px 5px 5px rgba(0, 0, 255, 0.20),
                     -1px 5px 5px rgba(0, 0, 255, 0.25);
-    font-variant: small-caps;
+
 }
 .btn-blog:hover {
            box-shadow: 0 15px 20px 0 rgba(0,0,255,0.34), 0 20px 55px 0 rgba(0,0,255,0.29);
@@ -112,4 +118,7 @@ nav a:hover{
 .card:hover{
     transform: scale(1.01);
     box-shadow: 0 20px 25px 0 rgba(0,0,0,0.34), 0 25px 60px 0 rgba(0,0,0,0.29);
+}
+p{
+color:    #312f2fe0;
 }

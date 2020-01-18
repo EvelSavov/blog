@@ -18,9 +18,9 @@
             <div class="card-body">
                 <h5 class="card-title" th:text="${post.body}"></h5>
                 <hr class="bg-blog hr-2"/>
-                <p class="card-text text-light" th:text="${'Author ' + post.user.username}"></p>
-                <p class="card-text text-light" th:text="${'Like ' + post.likeCount}"></p>
-                <p class="card-text text-light" th:text="${'Dislike ' + post.dislikeCount}"></p>
+                <p class="card-text " th:text="${'Author ' + post.user.username}"></p>
+                <p class="card-text " th:text="${'Like ' + post.likeCount}"></p>
+                <p class="card-text " th:text="${'Dislike ' + post.dislikeCount}"></p>
             </div>
         </div>
 
@@ -34,9 +34,9 @@
                     <a class="btn btn-secondary btn-outline-dark rounded"
                        th:href="@{/print/dislike/{id}(id=${post.id})}">&#128078;&#127995;</a>
                     <input class="btn btn-secondary btn-outline-dark rounded" type="submit"
-                           id = "commentBtn" value="comment &#9997;&#127995;"/>
+                           id = "commentBtn" value="comment &#128394;"/>
                 </div>
-                <input type="text" class="form-control" id="comment" placeholder="add comment..." name="body" required maxlength="250"/>
+                <input type="text" class="form-control" id="comment" placeholder="add comment..." name="body" required maxlength="250" autocomplete="off"/>
             </div>
         </form>
 

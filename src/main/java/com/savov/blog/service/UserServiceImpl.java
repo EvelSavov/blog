@@ -27,38 +27,49 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserServiceModel addUser(UserServiceModel userServiceModel) {
-        User user = this.modelMapper.map(userServiceModel,User.class);
+        User user = this.modelMapper.map(userServiceModel, User.class);
         user.setRole(roleRepository.findByName("User"));
         user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
-        return this.modelMapper.map(userRepository.saveAndFlush(user),UserServiceModel.class);
+        return this.modelMapper.map(userRepository.saveAndFlush(user), UserServiceModel.class);
     }
 
     @Override
     public UserServiceModel loginUser(UserLoginBindingModel userLoginBindingModel) {
-        User user =  userRepository.findByUsername(userLoginBindingModel.getUsername());
-        if((user!=null) && (user.getUsername().equals(userLoginBindingModel.getUsername())) && (this.bCryptPasswordEncoder.matches(userLoginBindingModel.getPassword(),user.getPassword())))
-        {
-            return this.modelMapper.map(user,UserServiceModel.class);
-        }else return null;
+        User user = userRepository.findByUsername(userLoginBindingModel.getUsername());
+        if ((user != null) && (user.getUsername().equals(userLoginBindingModel.getUsername())) && (this.bCryptPasswordEncoder.matches(userLoginBindingModel.getPassword(), user.getPassword()))) {
+            return this.modelMapper.map(user, UserServiceModel.class);
+        } else return null;
     }
 
     @Override
     public UserServiceModel getUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
 
-        return this.modelMapper.map(user,UserServiceModel.class);
+        return this.modelMapper.map(user, UserServiceModel.class);
     }
 
     @Override
     public UserServiceModel updateUser(String username, UserServiceModel userServiceModel) {
         User user = userRepository.findByUsername(username);
-        user.setFirstName(userServiceModel.getFirstName());
-        user.setLastName(userServiceModel.getLastName());
-        user.setUsername(userServiceModel.getUsername());
-        user.setAddress(userServiceModel.getAddress());
-        user.setEmail(userServiceModel.getEmail());
-        user.setPassword(this.bCryptPasswordEncoder.encode(userServiceModel.getPassword()));
-        return  this.modelMapper.map(userRepository.save(user),UserServiceModel.class);
+        if (userServiceModel.getFirstName()!=null) {
+            user.setFirstName(userServiceModel.getFirstName());
+        }
+        if (userServiceModel.getLastName()!=null) {
+            user.setLastName(userServiceModel.getLastName());
+        }
+        if (userServiceModel.getUsername()!=null) {
+            user.setUsername(userServiceModel.getUsername());
+        }
+        if (userServiceModel.getAddress()!=null) {
+            user.setAddress(userServiceModel.getAddress());
+        }
+        if (userServiceModel.getEmail()!=null) {
+            user.setEmail(userServiceModel.getEmail());
+        }
+        if (userServiceModel.getPassword()!=null) {
+            user.setPassword(this.bCryptPasswordEncoder.encode(userServiceModel.getPassword()));
+        }
+        return this.modelMapper.map(userRepository.save(user), UserServiceModel.class);
     }
 
     @Override
@@ -66,7 +77,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(username);
         Role role = roleRepository.findByName("Admin");
         user.setRole(role);
-        return this.modelMapper.map(userRepository.save(user),UserServiceModel.class);
+        return this.modelMapper.map(userRepository.save(user), UserServiceModel.class);
     }
 
     @Override
@@ -74,13 +85,13 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(username);
         Role role = roleRepository.findByName("User");
         user.setRole(role);
-        return this.modelMapper.map(userRepository.save(user),UserServiceModel.class);
+        return this.modelMapper.map(userRepository.save(user), UserServiceModel.class);
     }
 
     @Override
     public UserServiceModel deleteUser(String username) {
         User user = userRepository.findByUsername(username);
         userRepository.deleteById(user.getId());
-        return this.modelMapper.map(user,UserServiceModel.class);
+        return this.modelMapper.map(user, UserServiceModel.class);
     }
 }

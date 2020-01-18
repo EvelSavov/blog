@@ -17,7 +17,7 @@ var emailHelp = document.getElementById("emailHelp");
 var addressHelp = document.getElementById("addressHelp");
 
 //Regex
-var nameRegex = /[A-Z][a-z]*/g;
+var nameRegex = /^[A-Z]([a-z]*)$/g;
 var usernameRegex = /^([a-zA-Z0-9_]+)$/g;
 var passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/g;
 var emaiRegex = /^([a-zA-Z0-9_]+@[a-zA-Z]+\.[a-zA-Z]+)(\.[a-zA-Z]+)*$/g;

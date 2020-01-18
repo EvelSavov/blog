@@ -12,63 +12,130 @@
         <h1>My profile</h1>
         <hr class="bg-blog hr-2"/>
 
-        <div class="form-group">
+        <form id="a" class="mx-auto w-75" th:method="post" th:action="@{/updateUser}">
+            <div class="form-group">
+                <div class=" justify-content-center">
+                    <label for="firstName" class="text-blog h3">Firs Name</label>
+                </div>
+                <small id="firstNameHelp" class="text-danger"></small>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <input class="btn btn-blog rounded" type="button"
+                               id="fname-btn" value="&#128394;" onclick="enableField('firstName')"/>
+                    </div>
+                    <input type="text" class="form-control" id="firstName" name="firstName" th:value="${user.firstName}"
+                           disabled/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class=" justify-content-center">
+                    <label for="lastName" class="text-blog h3">Last name</label>
+                </div>
+                <small id="lastNameHelp" class="text-danger"></small>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+
+                        <input class="btn btn-blog rounded" type="button"
+                               id="lname-btn" value="&#128394;" onclick="enableField('lastName')"/>
+                    </div>
+                    <input type="text" class="form-control" id="lastName" placeholder="LastName..." name="lastName"
+                           th:value="${user.lastName}" disabled/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class=" justify-content-center">
+                    <label for="username" class="text-blog h3">Username</label>
+                </div>
+                <small id="usernameHelp" class="text-danger"></small>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+
+                        <input class="btn btn-blog rounded" type="button"
+                               id="uname-btn" value="&#128394;" onclick="enableField('username')"/>
+                    </div>
+                    <input type="text" class="form-control" id="username" placeholder="Username..." name="username"
+                           th:value="${user.username}" disabled/>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class=" justify-content-center">
+                    <label for="password" class="text-blog h3">Password</label>
+                </div>
+                <small id="passwordHelp" class="text-danger"></small>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+
+                        <input class="btn btn-blog rounded" type="button"
+                               id="pass-btn" value="&#128394;" onclick="enableField('password')"/>
+                    </div>
+                    <input type="password" class="form-control" id="password" value="" placeholder="Password..." name="password"
+                            disabled/>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class=" justify-content-center">
+                    <label for="email" class="text-blog h3">Email</label>
+                </div>
+                <small id="emailHelp" class="text-danger"></small>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+
+                        <input class="btn btn-blog rounded" type="button"
+                               id="email-btn" value="&#128394;" onclick="enableField('email')"/>
+                    </div>
+                    <input type="text" class="form-control" id="email" placeholder="Email..." name="email"
+                           th:value="${user.Email}" disabled/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="justify-content-center">
+                    <label for="address" class="text-blog h3">Address</label>
+                </div>
+                <small id="addressHelp" class="text-danger"></small>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+
+                        <input class="btn btn-blog rounded" type="button"
+                               id="address-btn" value="&#128394;" onclick="enableField('address')"/>
+                    </div>
+                    <input type="address" class="form-control" id="address" placeholder="Address..." name="address"
+                           th:value="${user.address}" disabled/>
+                </div>
+            </div>
+
+            <div id="update-btn" class=" justify-content-center" style="display: none;">
+                <button id="updBtn" type="submit" class="btn btn-blog">Save</button>
+            </div>
+
+            <hr class="bg-blog hr-2"/>
+
             <div class=" justify-content-center">
-                <label for="firstName" class="text-blog h3">Firs Name</label>
+                <a class="btn btn-blog" th:href="@{/myposts}">My Posts</a>
             </div>
-            <input type="text" class="form-control" id="firstName" name="firstName" th:value="${user.firstName}"
-                   disabled/>
-        </div>
 
-        <div class="form-group">
+            <br/>
+
             <div class=" justify-content-center">
-                <label for="lastName" class="text-blog h3">Last name</label>
+                <a class="btn btn-blog" th:href="@{/mycomments}">My Comments</a>
             </div>
-            <input type="text" class="form-control" id="lastName" placeholder="LastName..." name="lastName"
-                   th:value="${user.lastName}" disabled/>
-        </div>
-
-        <div class="form-group">
-            <div class=" justify-content-center">
-                <label for="username" class="text-blog h3">Username</label>
-            </div>
-            <input type="text" class="form-control" id="username" placeholder="Username..." name="username"
-                   th:value="${user.username}" disabled/>
-        </div>
-
-        <div class="form-group">
-            <div class=" justify-content-center">
-                <label for="email" class="text-blog h3">Email</label>
-            </div>
-            <input type="text" class="form-control" id="email" placeholder="Email..." name="email"
-                   th:value="${user.Email}" disabled/>
-        </div>
-
-        <div class="form-group">
-            <div class="justify-content-center">
-                <label for="address" class="text-blog h3">Address</label>
-            </div>
-            <input type="address" class="form-control" id="address" placeholder="Address..." name="address"
-                   th:value="${user.address}" disabled/>
-        </div>
-
-        <hr class="bg-blog hr-2"/>
-
-        <div class=" justify-content-center">
-            <a class="btn btn-blog" th:href="@{/myposts}">My Posts</a>
-        </div>
-
-        <br/>
-
-        <div class=" justify-content-center">
-            <a class="btn btn-blog" th:href="@{/mycomments}">My Comments</a>
-        </div>
+        </form>
 
     </div>
+
+    <br/>
+    <br/>
 
 </main>
 
 
 <th:block th:replace="fragments/footer"></th:block>
 </body>
+<script th:src="@{/js/myProfileScript.js}"></script>
+<script th:src="@{/js/regValidationScript.js}"></script>
 </html>
