@@ -1,6 +1,7 @@
 package com.savov.blog.service;
 
 import com.savov.blog.domain.entities.Post;
+import com.savov.blog.domain.entities.User;
 import com.savov.blog.domain.model.service.PostServiceModel;
 import com.savov.blog.repository.CategoryRepository;
 import com.savov.blog.repository.PostRepository;
@@ -97,16 +98,31 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostServiceModel addLike(Long postId) {
+    public PostServiceModel addLike(Long postId,Long userId) {
         Post post = postRepository.findById(postId).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
+//        List<User> like = post.getLike();
+//        like.add(user);
+//        post.setLike(like);
         post.setLikeCount(post.getLikeCount()+1);
+        List<Post> likedPosts = user.getLikedPosts();
+        likedPosts.add(post);
+        user.setLikedPosts(likedPosts);
         return this.modelMapper.map(postRepository.saveAndFlush(post),PostServiceModel.class);
     }
 
     @Override
-    public PostServiceModel addDislike(Long postId) {
+    public PostServiceModel addDislike(Long postId, Long userId) {
         Post post = postRepository.findById(postId).orElse(null);
-        post.setDislikeCount(post.getDislikeCount()+1);
+        User user = userRepository.findById(userId).orElse(null);
+        List<User> dislike = post.getDislike();
+//        dislike.add(user);
+//        post.setDislike(dislike);
+//        post.setDislikeCount(post.getDislikeCount()+1);
+        List<Post> dislikedPosts = user.getDislikedPosts();
+        dislikedPosts.add(post);
+        user.setDislikedPosts(dislikedPosts);
+
         return this.modelMapper.map(postRepository.save(post),PostServiceModel.class);
     }
 }

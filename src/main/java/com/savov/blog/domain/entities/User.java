@@ -27,6 +27,9 @@ public class User extends BaseEntity {
 
     private List<Comment> comments;
 
+    private List<Post> likedPosts;
+
+    private List<Post> dislikedPosts;
 
     public User() {
     }
@@ -114,5 +117,30 @@ public class User extends BaseEntity {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    @ManyToMany(cascade = CascadeType.REMOVE)
+    @JoinTable(
+            name = "post_like",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id"))
+    public List<Post> getLikedPosts() {
+        return likedPosts;
+    }
+
+    public void setLikedPosts(List<Post> likedPosts) {
+        this.likedPosts = likedPosts;
+    }
+    @ManyToMany(cascade = CascadeType.REMOVE)
+    @JoinTable(
+            name = "post_dislike",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id"))
+    public List<Post> getDislikedPosts() {
+        return dislikedPosts;
+    }
+
+    public void setDislikedPosts(List<Post> dislikedPosts) {
+        this.dislikedPosts = dislikedPosts;
     }
 }

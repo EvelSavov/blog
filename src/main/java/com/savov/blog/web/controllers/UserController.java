@@ -85,7 +85,7 @@ public class UserController {
         if (session.getAttribute("username") != null) {
             session.invalidate();
         }
-        modelAndView.setViewName("redirect:/login");
+        modelAndView.setViewName("redirect:/");
 
         return modelAndView;
     }

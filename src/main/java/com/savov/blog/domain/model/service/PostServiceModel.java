@@ -18,7 +18,12 @@ public class PostServiceModel {
 
     private Long likeCount;
 
+    private List<UserServiceModel> like;
+
     private Long dislikeCount;
+
+    private List<UserServiceModel> dislike;
+
 
     private UserServiceModel user;
 
@@ -95,4 +100,19 @@ public class PostServiceModel {
         this.comments = comments;
     }
 
+    public List<UserServiceModel> getLike() {
+        return like;
+    }
+
+    public void setLike(List<UserServiceModel> like) {
+        this.like = like;
+    }
+
+    public List<UserServiceModel> getDislike() {
+        return dislike;
+    }
+
+    public void setDislike(List<UserServiceModel> dislike) {
+        this.dislike = dislike;
+    }
 }

@@ -2,9 +2,11 @@ package com.savov.blog.web.controllers;
 
 import com.savov.blog.domain.model.binding.PostBindingModel;
 import com.savov.blog.domain.model.service.PostServiceModel;
+import com.savov.blog.domain.model.service.UserServiceModel;
 import com.savov.blog.service.CategoryService;
 import com.savov.blog.service.CommentService;
 import com.savov.blog.service.PostService;
+import com.savov.blog.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +24,14 @@ public class PostController {
     private final ModelMapper modelMapper;
     private final CommentService commentService;
     private final CategoryService categoryService;
+    private final UserService userServicel;
 
-
-    public PostController(PostService postService, ModelMapper modelMapper, CommentService commentService, CategoryService categoryService) {
+    public PostController(PostService postService, ModelMapper modelMapper, CommentService commentService, CategoryService categoryService, UserService userServicel) {
         this.postService = postService;
         this.modelMapper = modelMapper;
         this.commentService = commentService;
         this.categoryService = categoryService;
+        this.userServicel = userServicel;
     }
 
 
@@ -42,7 +45,10 @@ public class PostController {
     @GetMapping("/print/{id}")
     public ModelAndView getPostById(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
         if(session.getAttribute("username")!=null) {
+
             modelAndView.addObject("post", postService.getPostById(id));
+            UserServiceModel user = userServicel.getUserByUsername((String) session.getAttribute("username"));
+            modelAndView.addObject("user",user);
             modelAndView.setViewName("print");
         }else{
             modelAndView.setViewName("redirect:/login");
@@ -78,7 +84,7 @@ public class PostController {
         if(session.getAttribute("username")!=null) {
 
             postService.addPost(this.modelMapper.map(post, PostServiceModel.class), (Long) session.getAttribute("id"));
-            modelAndView.setViewName("redirect:/");
+            modelAndView.setViewName("redirect:/allpost");
         }else{
             modelAndView.setViewName("redirect:/login");
         }
@@ -104,7 +110,7 @@ public class PostController {
     public ModelAndView updateConfirm(@ModelAttribute PostBindingModel post,@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session){
 
         postService.updatePost(id,this.modelMapper.map(post, PostServiceModel.class), (Long) session.getAttribute("id"));
-        modelAndView.setViewName("redirect:/profile");
+        modelAndView.setViewName("redirect:/allpost");
         return modelAndView;
     }
 
@@ -123,7 +129,10 @@ public class PostController {
     @GetMapping("/print/like/{id}")
     public ModelAndView like(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
         if(session.getAttribute("username")!=null) {
-            postService.addLike(id);
+            Long userId = (Long) session.getAttribute("id");
+            postService.addLike(id,userId);
+            UserServiceModel user = userServicel.getUserByUsername((String) session.getAttribute("username"));
+            modelAndView.addObject("user",user);
             modelAndView.addObject("post", postService.getPostById(id));
             modelAndView.addObject("comments", commentService.getByPostId(id));
             modelAndView.setViewName("print");
@@ -136,8 +145,10 @@ public class PostController {
     @GetMapping("/print/dislike/{id}")
     public ModelAndView dislike(@PathVariable(name = "id") Long id,ModelAndView modelAndView,HttpSession session) {
         if(session.getAttribute("username")!=null) {
-
-            postService.addDislike(id);
+            Long userId = (Long) session.getAttribute("id");
+            postService.addDislike(id,userId);
+            UserServiceModel user = userServicel.getUserByUsername((String) session.getAttribute("username"));
+            modelAndView.addObject("user",user);
             modelAndView.addObject("post", postService.getPostById(id));
             modelAndView.addObject("comments", commentService.getByPostId(id));
             modelAndView.setViewName("print");

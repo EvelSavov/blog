@@ -3,6 +3,7 @@ package com.savov.blog.domain.model.service;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.savov.blog.domain.entities.Post;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,10 @@ public class UserServiceModel {
     private List<PostServiceModel> posts;
 
     private List<CommentServiceModel> comments;
+
+    private List<PostServiceModel> likedPosts;
+
+    private List<PostServiceModel> dislikedPosts;
 
 
     public UserServiceModel() {
@@ -115,4 +120,19 @@ public class UserServiceModel {
         this.comments = comments;
     }
 
+    public List<PostServiceModel> getLikedPosts() {
+        return likedPosts;
+    }
+
+    public void setLikedPosts(List<PostServiceModel> likedPosts) {
+        this.likedPosts = likedPosts;
+    }
+
+    public List<PostServiceModel> getDislikedPosts() {
+        return dislikedPosts;
+    }
+
+    public void setDislikedPosts(List<PostServiceModel> dislikedPosts) {
+        this.dislikedPosts = dislikedPosts;
+    }
 }

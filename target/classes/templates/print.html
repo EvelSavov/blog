@@ -30,6 +30,7 @@
         <form class="mx-auto w-75" th:method="post" th:action="@{/addcomment/{postid}(postid=${post.id})}">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
+
                     <a class="btn btn-secondary btn-outline-dark rounded" th:href="@{/print/like/{id}(id=${post.id})}">&#128077;&#127995;</a>
                     <a class="btn btn-secondary btn-outline-dark rounded"
                        th:href="@{/print/dislike/{id}(id=${post.id})}">&#128078;&#127995;</a>
@@ -60,6 +61,18 @@
         <br/>
         <br/>
     </div>
+
+    <div th:with="someVariable='a'">
+    <th:block th:each="user1:${user.likedPosts}">
+    <h1 th:if="${user1.id==post.id}" th:with="${someVariable}='yes'"> </h1>
+    </th:block>
+    <h1  th:text="${someVariable}"> </h1>
+    </div>
+<!--    <h1 th:text="${user}"></h1>-->
+<!--    <h1 th:text="${user.likedPosts}">..</h1>-->
+<!--    <th:block th:if="${#lists.contains(user.likedPosts, post)}">-->
+<!--        <h1 th:text="${#lists.contains(user.likedPosts, post)}">yes</h1>-->
+<!--    </th:block>-->
 
 </main>
 <br/>
