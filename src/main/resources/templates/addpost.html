@@ -7,7 +7,7 @@
 <body>
 <th:block th:replace="fragments/navbar"></th:block>
 <main>
-    <div class="container text-center">
+    <div class="container text-center blog-container">
 
         <h1>New post</h1>
         <hr class="bg-blog hr-2"/>
@@ -42,12 +42,11 @@
                 </select>
 
             </div>
-
+            <br/>
             <div class="justify-content-center">
                 <button id= "postBtn" type="submit" class="btn btn-blog ">Post</button>
             </div>
-            <br/>
-            <br/>
+
         </form>
 
         <br/>
@@ -57,7 +56,9 @@
 </main>
 
 <th:block th:replace="fragments/footer"></th:block>
-
+<br/>
+<br/>
+<br/>
 </body>
 <script th:src="@{/js/postValidationScript.js}"></script>
 </html>
