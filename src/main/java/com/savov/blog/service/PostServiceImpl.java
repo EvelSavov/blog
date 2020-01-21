@@ -118,7 +118,7 @@ public class PostServiceImpl implements PostService {
         List<User> dislike = post.getDislike();
 //        dislike.add(user);
 //        post.setDislike(dislike);
-//        post.setDislikeCount(post.getDislikeCount()+1);
+        post.setDislikeCount(post.getDislikeCount()+1);
         List<Post> dislikedPosts = user.getDislikedPosts();
         dislikedPosts.add(post);
         user.setDislikedPosts(dislikedPosts);

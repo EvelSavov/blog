@@ -135,3 +135,7 @@ margin-top: 30px;
     padding: 20px;
     padding-top: 20px;
 }
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}

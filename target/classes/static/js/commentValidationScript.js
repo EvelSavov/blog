@@ -25,4 +25,3 @@ document.getElementById("commentBtn").onclick = function() {
     commentValidator();
 }
 
-

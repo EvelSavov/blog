@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class PostController {
@@ -45,10 +46,32 @@ public class PostController {
     @GetMapping("/print/{id}")
     public ModelAndView getPostById(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
         if(session.getAttribute("username")!=null) {
+            PostServiceModel post = postService.getPostById(id);
 
-            modelAndView.addObject("post", postService.getPostById(id));
+            modelAndView.addObject("post", post);
             UserServiceModel user = userServicel.getUserByUsername((String) session.getAttribute("username"));
-            modelAndView.addObject("user",user);
+            boolean a = true;
+            List<PostServiceModel> likedPosts = user.getLikedPosts();
+            List<PostServiceModel> dislikedPosts = user.getDislikedPosts();
+            for (PostServiceModel dislikedPost : dislikedPosts) {
+                if (dislikedPost.getId().equals(post.getId())) {
+                    a = false;
+                    break;
+                }
+            }
+            for (PostServiceModel likedPost : likedPosts) {
+                if (likedPost.getId().equals(post.getId())) {
+                    a = false;
+                    break;
+                }
+            }
+            if(a) {
+                modelAndView.addObject("btnVisibility", "yes");
+            }else{
+                modelAndView.addObject("btnVisibility", "no");
+            }
+
+
             modelAndView.setViewName("print");
         }else{
             modelAndView.setViewName("redirect:/login");
@@ -135,7 +158,7 @@ public class PostController {
             modelAndView.addObject("user",user);
             modelAndView.addObject("post", postService.getPostById(id));
             modelAndView.addObject("comments", commentService.getByPostId(id));
-            modelAndView.setViewName("print");
+            modelAndView.setViewName("redirect:/print/"+id);
         }else{
             modelAndView.setViewName("redirect:/login");
         }
@@ -151,7 +174,7 @@ public class PostController {
             modelAndView.addObject("user",user);
             modelAndView.addObject("post", postService.getPostById(id));
             modelAndView.addObject("comments", commentService.getByPostId(id));
-            modelAndView.setViewName("print");
+            modelAndView.setViewName("redirect:/print/"+id);
 
         }else
         {

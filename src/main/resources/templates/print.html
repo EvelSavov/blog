@@ -30,10 +30,10 @@
         <form class="mx-auto w-75" th:method="post" th:action="@{/addcomment/{postid}(postid=${post.id})}">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-
-                    <a class="btn btn-secondary btn-outline-dark rounded" th:href="@{/print/like/{id}(id=${post.id})}">&#128077;&#127995;</a>
-                    <a class="btn btn-secondary btn-outline-dark rounded"
-                       th:href="@{/print/dislike/{id}(id=${post.id})}">&#128078;&#127995;</a>
+                    <th:block th:if="${btnVisibility == 'yes'}">
+                    <a class="btn btn-secondary btn-outline-dark rounded" th:href="@{/print/like/{id}(id=${post.id})}">&#128077;&#127995; </a>
+                    <a class="btn btn-secondary btn-outline-dark rounded" th:href="@{/print/dislike/{id}(id=${post.id})}">&#128078;&#127995;</a>
+                    </th:block>
                     <input class="btn btn-secondary btn-outline-dark rounded" type="submit"
                            id = "commentBtn" value="comment &#128394;"/>
                 </div>
@@ -61,6 +61,12 @@
         <br/>
         <br/>
     </div>
+
+<!--        <input class="btn btn-secondary btn-outline-dark rounded" value="asda" th:disabled="${btnDisabled == 'yes'} ? '' : 'false'"/>-->
+<!--        <input class="btn btn-secondary btn-outline-dark rounded" value="asda" th:visibility="${btnVisibility == 'yes'} ? 'visible' : 'hidden'"/>-->
+
+
+
 
 </main>
 <br/>
