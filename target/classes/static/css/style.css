@@ -44,7 +44,7 @@ input[type="text"]:disabled{
 }
 
 .form-control:hover,.form-control:focus{
-    box-shadow: 0 15px 20px 0 rgba(0,255,0,0.34), 0 20px 55px 0 rgba(0,255,0,0.29);
+    box-shadow: 0 15px 20px 0 rgb(49, 58, 19), 0 20px 55px 0 rgba(0,255,0,0.29);
 }
 
 .is-invalid:hover, .is-invalid:focus{

@@ -28,10 +28,6 @@ function bodyValidator(){
     }
 }
 
-
-
-
-
 title.onkeyup =  titleValidator;
 body.onkeyup =  bodyValidator;
 
