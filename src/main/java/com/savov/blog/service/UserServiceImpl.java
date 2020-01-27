@@ -51,22 +51,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserServiceModel updateUser(String username, UserServiceModel userServiceModel) {
         User user = userRepository.findByUsername(username);
-        if (userServiceModel.getFirstName()!=null) {
+        if (userServiceModel.getFirstName() != null) {
             user.setFirstName(userServiceModel.getFirstName());
         }
-        if (userServiceModel.getLastName()!=null) {
+        if (userServiceModel.getLastName() != null) {
             user.setLastName(userServiceModel.getLastName());
         }
-        if (userServiceModel.getUsername()!=null) {
+        if (userServiceModel.getUsername() != null) {
             user.setUsername(userServiceModel.getUsername());
         }
-        if (userServiceModel.getAddress()!=null) {
+        if (userServiceModel.getAddress() != null) {
             user.setAddress(userServiceModel.getAddress());
         }
-        if (userServiceModel.getEmail()!=null) {
+        if (userServiceModel.getEmail() != null) {
             user.setEmail(userServiceModel.getEmail());
         }
-        if (userServiceModel.getPassword()!=null) {
+        if (userServiceModel.getPassword() != null) {
             user.setPassword(this.bCryptPasswordEncoder.encode(userServiceModel.getPassword()));
         }
         return this.modelMapper.map(userRepository.save(user), UserServiceModel.class);

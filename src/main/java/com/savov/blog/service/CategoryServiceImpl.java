@@ -5,6 +5,7 @@ import com.savov.blog.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 

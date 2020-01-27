@@ -1,7 +1,6 @@
 package com.savov.blog.domain.model.service;
 
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.savov.blog.domain.entities.Post;
 

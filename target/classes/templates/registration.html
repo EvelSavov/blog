@@ -21,7 +21,8 @@
                     <label for="firstName" class="text-blog h3">Firs Name *</label>
                 </div>
                 <small id="firstNameHelp" class="text-danger"></small>
-                <input type="text" class="form-control " id="firstName" placeholder="First name..." name="firstName" required pattern="[A-Z][a-z]*" maxlength="50"/>
+                <input type="text" class="form-control " id="firstName" placeholder="First name..." name="firstName"
+                       required pattern="[A-Z][a-z]*" maxlength="50"/>
             </div>
 
             <div class="form-group">
@@ -29,7 +30,8 @@
                     <label for="lastName" class="text-blog h3">Last name *</label>
                 </div>
                 <small id="lastNameHelp" class="text-danger"></small>
-                <input type="text" class="form-control" id="lastName" placeholder="LastName..." name="lastName" required pattern="[A-Z][a-z]*" maxlength="50"/>
+                <input type="text" class="form-control" id="lastName" placeholder="LastName..." name="lastName" required
+                       pattern="[A-Z][a-z]*" maxlength="50"/>
             </div>
 
             <div class="form-group">
@@ -37,7 +39,8 @@
                     <label for="username" class="text-blog h3">Username *</label>
                 </div>
                 <small id="usernameHelp" class="text-danger"></small>
-                <input type="text" class="form-control" id="username" placeholder="Username..." name="username" required pattern="^([a-zA-Z0-9_]+)$" maxlength="50"/>
+                <input type="text" class="form-control" id="username" placeholder="Username..." name="username" required
+                       pattern="^([a-zA-Z0-9_]+)$" maxlength="50"/>
             </div>
 
             <div class="form-group">
@@ -45,7 +48,9 @@
                     <label for="password" class="text-blog h3">Password *</label>
                 </div>
                 <small id="passwordHelp" class="text-danger"></small>
-                <input type="password" class="form-control" id="password" placeholder="Password..." name="password" required pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$" minlength="8" maxlength="50"/>
+                <input type="password" class="form-control" id="password" placeholder="Password..." name="password"
+                       required pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$" minlength="8"
+                       maxlength="50"/>
             </div>
 
             <div class="form-group">
@@ -62,7 +67,8 @@
                     <label for="email" class="text-blog h3">Email *</label>
                 </div>
                 <small id="emailHelp" class="text-danger"></small>
-                <input type="text" class="form-control" id="email" placeholder="Email..." name="email" required pattern="^([a-zA-Z0-9_]+@[a-zA-Z]+\.[a-zA-Z]+)(\.[a-zA-Z]+)*$" maxlength="100"/>
+                <input type="text" class="form-control" id="email" placeholder="Email..." name="email" required
+                       pattern="^([a-zA-Z0-9_]+@[a-zA-Z]+\.[a-zA-Z]+)(\.[a-zA-Z]+)*$" maxlength="100"/>
             </div>
 
             <div class="form-group">
@@ -70,15 +76,15 @@
                     <label for="address" class="text-blog h3">Address</label>
                 </div>
                 <small id="addressHelp" class="text-danger"></small>
-                <input type="address" class="form-control" id="address" placeholder="Address..." name="address" maxlength="100"/>
+                <input type="address" class="form-control" id="address" placeholder="Address..." name="address"
+                       maxlength="100"/>
             </div>
 
             <hr class="bg-blog hr-2"/>
 
             <div class="justify-content-center">
-                <button id ="regBtn" type="submit" class="btn btn-blog">Register</button>
+                <button id="regBtn" type="submit" class="btn btn-blog">Register</button>
             </div>
-
 
 
         </form>

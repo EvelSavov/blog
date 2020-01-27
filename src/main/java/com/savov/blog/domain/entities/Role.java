@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "roles")
-public class Role extends BaseEntity{
+public class Role extends BaseEntity {
 
     private String name;
 
@@ -17,7 +17,7 @@ public class Role extends BaseEntity{
     public Role() {
     }
 
-    @Column(name = "name", unique = true,nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     public String getName() {
         return name;
     }
@@ -27,7 +27,7 @@ public class Role extends BaseEntity{
     }
 
     @JsonIgnore
-    @OneToMany(mappedBy = "role", orphanRemoval = true,cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "role", orphanRemoval = true, cascade = CascadeType.REMOVE)
     public List<User> getUsers() {
         return users;
     }

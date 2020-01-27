@@ -20,28 +20,14 @@ public class HomeController {
     public HomeController(PostService postService) {
         this.postService = postService;
     }
+
     @GetMapping("/")
     public ModelAndView home(ModelAndView modelAndView) {
         List<PostServiceModel> topPosts = postService.getTopPost();
-        modelAndView.addObject("topPosts",topPosts);
+        modelAndView.addObject("topPosts", topPosts);
         modelAndView.setViewName("home");
         return modelAndView;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

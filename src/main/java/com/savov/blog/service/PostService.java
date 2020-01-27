@@ -27,7 +27,7 @@ public interface PostService {
 
     Long getDislike(Long postId);
 
-    PostServiceModel addLike(Long postId ,Long userId);
+    PostServiceModel addLike(Long postId, Long userId);
 
     PostServiceModel addDislike(Long postId, Long userId);
 

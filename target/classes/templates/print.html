@@ -31,13 +31,16 @@
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <th:block th:if="${btnVisibility == 'yes'}">
-                    <a class="btn btn-secondary btn-outline-dark rounded" th:href="@{/print/like/{id}(id=${post.id})}">&#128077;&#127995; </a>
-                    <a class="btn btn-secondary btn-outline-dark rounded" th:href="@{/print/dislike/{id}(id=${post.id})}">&#128078;&#127995;</a>
+                        <a class="btn btn-secondary btn-outline-dark rounded"
+                           th:href="@{/print/like/{id}(id=${post.id})}">&#128077;&#127995; </a>
+                        <a class="btn btn-secondary btn-outline-dark rounded"
+                           th:href="@{/print/dislike/{id}(id=${post.id})}">&#128078;&#127995;</a>
                     </th:block>
                     <input class="btn btn-secondary btn-outline-dark rounded" type="submit"
-                           id = "commentBtn" value="comment &#128394;"/>
+                           id="commentBtn" value="comment &#128394;"/>
                 </div>
-                <input type="text" class="form-control" id="comment" placeholder="add comment..." name="body" required maxlength="250" autocomplete="off"/>
+                <input type="text" class="form-control" id="comment" placeholder="add comment..." name="body" required
+                       maxlength="250" autocomplete="off"/>
             </div>
         </form>
 
@@ -62,10 +65,8 @@
         <br/>
     </div>
 
-<!--        <input class="btn btn-secondary btn-outline-dark rounded" value="asda" th:disabled="${btnDisabled == 'yes'} ? '' : 'false'"/>-->
-<!--        <input class="btn btn-secondary btn-outline-dark rounded" value="asda" th:visibility="${btnVisibility == 'yes'} ? 'visible' : 'hidden'"/>-->
-
-
+    <!--        <input class="btn btn-secondary btn-outline-dark rounded" value="asda" th:disabled="${btnDisabled == 'yes'} ? '' : 'false'"/>-->
+    <!--        <input class="btn btn-secondary btn-outline-dark rounded" value="asda" th:visibility="${btnVisibility == 'yes'} ? 'visible' : 'hidden'"/>-->
 
 
 </main>

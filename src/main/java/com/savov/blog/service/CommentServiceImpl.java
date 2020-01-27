@@ -33,46 +33,46 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentServiceModel> getAllComments() {
         List<Comment> comments = commentRepository.findAll();
-        return comments.stream().map(c->this.modelMapper.map(c,CommentServiceModel.class)).collect(Collectors.toList());
+        return comments.stream().map(c -> this.modelMapper.map(c, CommentServiceModel.class)).collect(Collectors.toList());
     }
 
     @Override
     public CommentServiceModel getCommentsById(Long id) {
         Comment comment = commentRepository.findById(id).orElse(null);
-        return  this.modelMapper.map(comment,CommentServiceModel.class);
+        return this.modelMapper.map(comment, CommentServiceModel.class);
     }
 
     @Override
     public List<CommentServiceModel> getByPostId(Long postId) {
         List<Comment> comments = commentRepository.findByPostId(postId);
-        return comments.stream().map(c->this.modelMapper.map(c,CommentServiceModel.class)).collect(Collectors.toList());
+        return comments.stream().map(c -> this.modelMapper.map(c, CommentServiceModel.class)).collect(Collectors.toList());
     }
 
     @Override
     public List<CommentServiceModel> getCommentsByUserId(Long userId) {
         List<Comment> comments = commentRepository.findByUserId(userId);
 
-        return  comments.stream().map(c->this.modelMapper.map(c,CommentServiceModel.class)).collect(Collectors.toList());
+        return comments.stream().map(c -> this.modelMapper.map(c, CommentServiceModel.class)).collect(Collectors.toList());
     }
 
     @Override
     public CommentServiceModel addComments(Long postId, CommentServiceModel comment, Long id) {
-        Comment comment1 = this.modelMapper.map(comment,Comment.class);
+        Comment comment1 = this.modelMapper.map(comment, Comment.class);
         User user = userRepository.findById(id).orElse(null);
         comment1.setUser(user);
         comment1.setPost(postRepository.findById(postId).orElse(null));
 
-        return  this.modelMapper.map(commentRepository.save(comment1),CommentServiceModel.class);
+        return this.modelMapper.map(commentRepository.save(comment1), CommentServiceModel.class);
     }
 
     @Override
     public CommentServiceModel updateComments(Long commentId, CommentServiceModel comment) {
-        Comment c = this.modelMapper.map(comment,Comment.class);
+        Comment c = this.modelMapper.map(comment, Comment.class);
         Comment comment1 = commentRepository.findById(commentId).orElse(null);
         //comment1.setPost(c.getPost());
         comment1.setBody(c.getBody());
         //comment1.setUser(c.getUser());
-        return this.modelMapper.map(commentRepository.save(comment1),CommentServiceModel.class);
+        return this.modelMapper.map(commentRepository.save(comment1), CommentServiceModel.class);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepository.findById(id).orElse(null);
         commentRepository.deleteById(id);
 
-        return this.modelMapper.map(comment,CommentServiceModel.class);
+        return this.modelMapper.map(comment, CommentServiceModel.class);
     }
 }
 

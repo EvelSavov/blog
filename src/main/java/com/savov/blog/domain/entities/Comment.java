@@ -6,19 +6,19 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "comments")
-public class Comment extends BaseEntity{
+public class Comment extends BaseEntity {
 
-        private String body;
+    private String body;
 
-        private Post post;
+    private Post post;
 
-        private User user;
+    private User user;
 
 
     public Comment() {
     }
 
-    @Column(name = "body",nullable = false)
+    @Column(name = "body", nullable = false)
     public String getBody() {
         return body;
     }

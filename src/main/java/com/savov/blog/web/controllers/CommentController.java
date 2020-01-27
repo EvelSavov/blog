@@ -26,32 +26,32 @@ public class CommentController {
 
     @PostMapping("/addcomment/{postid}")
     public ModelAndView addComment(@ModelAttribute CommentBindingModel comment, @PathVariable(name = "postid") Long postid, ModelAndView modelAndView, HttpSession session) {
-        if(session.getAttribute("username")!=null) {
+        if (session.getAttribute("username") != null) {
             commentService.addComments(postid, this.modelMapper.map(comment, CommentServiceModel.class), (Long) session.getAttribute("id"));
             modelAndView.setViewName(String.format("redirect:/print/%d", postid));
-        }else {
+        } else {
             modelAndView.setViewName("redirect:/login");
         }
         return modelAndView;
     }
 
     @GetMapping("comment/delete/{id}")
-    public ModelAndView deleteComment(@PathVariable(name = "id")Long commentId,ModelAndView modelAndView ,HttpSession session){
-        if(session.getAttribute("username")!=null) {
+    public ModelAndView deleteComment(@PathVariable(name = "id") Long commentId, ModelAndView modelAndView, HttpSession session) {
+        if (session.getAttribute("username") != null) {
             commentService.deleteComments(commentId);
             modelAndView.setViewName("redirect:/mycomments");
-        }else {
+        } else {
             modelAndView.setViewName("redirect:/login");
         }
         return modelAndView;
     }
 
     @GetMapping("/mycomments")
-    public ModelAndView myComments(ModelAndView modelAndView,HttpSession session) {
-        if(session.getAttribute("username")!=null) {
-            modelAndView.addObject("documents",commentService.getCommentsByUserId((Long) session.getAttribute("id")));
+    public ModelAndView myComments(ModelAndView modelAndView, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            modelAndView.addObject("documents", commentService.getCommentsByUserId((Long) session.getAttribute("id")));
             modelAndView.setViewName("mycomments");
-        }else{
+        } else {
             modelAndView.setViewName("redirect:/login");
         }
         return modelAndView;

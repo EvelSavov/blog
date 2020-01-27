@@ -65,19 +65,18 @@ public class UserController {
     }
 
     @PostMapping("/updateUser")
-    public ModelAndView updateUser(@ModelAttribute User user, ModelAndView modelAndView , HttpSession session) {
+    public ModelAndView updateUser(@ModelAttribute User user, ModelAndView modelAndView, HttpSession session) {
         if (session.getAttribute("username") != null) {
             String username = (String) session.getAttribute("username");
             UserServiceModel userServiceModel = userService.updateUser(username, this.modelMapper.map(user, UserServiceModel.class));
-            session.setAttribute("username",userServiceModel.getUsername());
+            session.setAttribute("username", userServiceModel.getUsername());
             modelAndView.setViewName("redirect:/profile");
-        return modelAndView;
+            return modelAndView;
         } else {
             modelAndView.setViewName("redirect:/login");
         }
         return modelAndView;
     }
-
 
 
     @GetMapping("/logout")

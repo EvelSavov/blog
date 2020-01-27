@@ -38,14 +38,14 @@ public class PostController {
 
     @GetMapping("/allpost")
     public ModelAndView allPost(ModelAndView modelAndView) {
-        modelAndView.addObject("posts",postService.getAll());
+        modelAndView.addObject("posts", postService.getAll());
         modelAndView.setViewName("allpost");
         return modelAndView;
     }
 
     @GetMapping("/print/{id}")
     public ModelAndView getPostById(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
-        if(session.getAttribute("username")!=null) {
+        if (session.getAttribute("username") != null) {
             PostServiceModel post = postService.getPostById(id);
 
             modelAndView.addObject("post", post);
@@ -65,15 +65,15 @@ public class PostController {
                     break;
                 }
             }
-            if(a) {
+            if (a) {
                 modelAndView.addObject("btnVisibility", "yes");
-            }else{
+            } else {
                 modelAndView.addObject("btnVisibility", "no");
             }
 
 
             modelAndView.setViewName("print");
-        }else{
+        } else {
             modelAndView.setViewName("redirect:/login");
         }
         return modelAndView;
@@ -81,11 +81,11 @@ public class PostController {
     }
 
     @GetMapping("/myposts")
-    public ModelAndView myPosts(ModelAndView modelAndView,HttpSession session) {
-        if(session.getAttribute("username")!=null) {
-            modelAndView.addObject("documents",postService.getPostByUserId((Long) session.getAttribute("id")));
+    public ModelAndView myPosts(ModelAndView modelAndView, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+            modelAndView.addObject("documents", postService.getPostByUserId((Long) session.getAttribute("id")));
             modelAndView.setViewName("myposts");
-        }else{
+        } else {
             modelAndView.setViewName("redirect:/login");
         }
         return modelAndView;
@@ -93,10 +93,10 @@ public class PostController {
 
     @GetMapping("/addpost")
     public ModelAndView addPost(ModelAndView modelAndView, HttpSession session) {
-        if(session.getAttribute("username")!=null) {
+        if (session.getAttribute("username") != null) {
             modelAndView.setViewName("addpost");
             modelAndView.addObject("categories", categoryService.getAllCategories());
-        }else{
+        } else {
             modelAndView.setViewName("redirect:/login");
         }
         return modelAndView;
@@ -104,11 +104,11 @@ public class PostController {
 
     @PostMapping("/addpost")
     public ModelAndView confirmAddPost(@ModelAttribute PostBindingModel post, ModelAndView modelAndView, HttpSession session) {
-        if(session.getAttribute("username")!=null) {
+        if (session.getAttribute("username") != null) {
 
             postService.addPost(this.modelMapper.map(post, PostServiceModel.class), (Long) session.getAttribute("id"));
             modelAndView.setViewName("redirect:/allpost");
-        }else{
+        } else {
             modelAndView.setViewName("redirect:/login");
         }
 
@@ -117,12 +117,12 @@ public class PostController {
 
     @GetMapping("/update/{id}")
     public ModelAndView update(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
-        if(session.getAttribute("username")!=null) {
+        if (session.getAttribute("username") != null) {
             modelAndView.addObject("post", postService.getPostById(id));
-            modelAndView.addObject("categories",categoryService.getAllCategories());
+            modelAndView.addObject("categories", categoryService.getAllCategories());
             modelAndView.setViewName("update");
 
-        }else{
+        } else {
             modelAndView.setViewName("redirect:/login");
         }
         return modelAndView;
@@ -130,19 +130,19 @@ public class PostController {
     }
 
     @PostMapping("/update/{id}")
-    public ModelAndView updateConfirm(@ModelAttribute PostBindingModel post,@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session){
+    public ModelAndView updateConfirm(@ModelAttribute PostBindingModel post, @PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
 
-        postService.updatePost(id,this.modelMapper.map(post, PostServiceModel.class), (Long) session.getAttribute("id"));
+        postService.updatePost(id, this.modelMapper.map(post, PostServiceModel.class), (Long) session.getAttribute("id"));
         modelAndView.setViewName("redirect:/allpost");
         return modelAndView;
     }
 
     @GetMapping("/delete/{id}")
     public ModelAndView deletePost(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
-        if(session.getAttribute("username")!=null) {
+        if (session.getAttribute("username") != null) {
             postService.deletePost(id);
             modelAndView.setViewName("redirect:/profile");
-        }else{
+        } else {
             modelAndView.setViewName("redirect:/login");
         }
         return modelAndView;
@@ -151,33 +151,32 @@ public class PostController {
 
     @GetMapping("/print/like/{id}")
     public ModelAndView like(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
-        if(session.getAttribute("username")!=null) {
+        if (session.getAttribute("username") != null) {
             Long userId = (Long) session.getAttribute("id");
-            postService.addLike(id,userId);
+            postService.addLike(id, userId);
             UserServiceModel user = userServicel.getUserByUsername((String) session.getAttribute("username"));
-            modelAndView.addObject("user",user);
+            modelAndView.addObject("user", user);
             modelAndView.addObject("post", postService.getPostById(id));
             modelAndView.addObject("comments", commentService.getByPostId(id));
-            modelAndView.setViewName("redirect:/print/"+id);
-        }else{
+            modelAndView.setViewName("redirect:/print/" + id);
+        } else {
             modelAndView.setViewName("redirect:/login");
         }
         return modelAndView;
     }
 
     @GetMapping("/print/dislike/{id}")
-    public ModelAndView dislike(@PathVariable(name = "id") Long id,ModelAndView modelAndView,HttpSession session) {
-        if(session.getAttribute("username")!=null) {
+    public ModelAndView dislike(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
+        if (session.getAttribute("username") != null) {
             Long userId = (Long) session.getAttribute("id");
-            postService.addDislike(id,userId);
+            postService.addDislike(id, userId);
             UserServiceModel user = userServicel.getUserByUsername((String) session.getAttribute("username"));
-            modelAndView.addObject("user",user);
+            modelAndView.addObject("user", user);
             modelAndView.addObject("post", postService.getPostById(id));
             modelAndView.addObject("comments", commentService.getByPostId(id));
-            modelAndView.setViewName("redirect:/print/"+id);
+            modelAndView.setViewName("redirect:/print/" + id);
 
-        }else
-        {
+        } else {
             modelAndView.setViewName("redirect:/login");
         }
         return modelAndView;

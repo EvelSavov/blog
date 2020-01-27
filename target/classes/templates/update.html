@@ -16,7 +16,8 @@
                     <label for="title" class="text-blog h3">Title</label>
                 </div>
                 <small id="titleHelp" class="text-danger"></small>
-                <input type="text" class="form-control" id="title" th:value="${post.title}" name="title" required maxlength="250"
+                <input type="text" class="form-control" id="title" th:value="${post.title}" name="title" required
+                       maxlength="250"
                 />
             </div>
 
@@ -25,7 +26,8 @@
                     <label for="body" class="text-blog h3">Content</label>
                 </div>
                 <small id="bodyHelp" class="text-danger"></small>
-                <textarea class="form-control" id="body" name="body" rows="10" th:text="${post.body}"  required minlength="200"></textarea>
+                <textarea class="form-control" id="body" name="body" rows="10" th:text="${post.body}" required
+                          minlength="200"></textarea>
             </div>
 
             <hr class="bg-blog hr-2"/>
@@ -45,9 +47,8 @@
             <hr class="bg-blog hr-2"/>
 
             <div class="justify-content-center">
-                <button  id= "postBtn" type="submit" class="btn btn-blog">Update</button>
+                <button id="postBtn" type="submit" class="btn btn-blog">Update</button>
             </div>
-
 
 
         </form>
