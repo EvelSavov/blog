@@ -13,9 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -114,9 +119,31 @@ public class PostController {
 
     @PostMapping("/addpost")
     public ModelAndView confirmAddPost(@ModelAttribute PostBindingModel post, ModelAndView modelAndView, HttpSession session) {
+
+
+
         if (session.getAttribute("username") != null) {
 
-            postService.addPost(this.modelMapper.map(post, PostServiceModel.class), (Long) session.getAttribute("id"));
+            List<String> photos = new ArrayList<>();
+
+            if(post.getFiles().length>0){
+                for (int i = 0; i < post.getFiles().length; i++) {
+                    MultipartFile file = post.getFiles()[i];
+                    try {
+                        byte[] bytes = file.getBytes();
+                        Path path = Paths.get("photos/"  + file.getOriginalFilename());
+                        Files.write(path, bytes);
+                        photos.add(file.getOriginalFilename());
+                    } catch (Exception e) {
+                        System.out.println("error upload photo");
+                    }
+                }
+            }
+
+
+            PostServiceModel postServiceModel = this.modelMapper.map(post, PostServiceModel.class);
+            postServiceModel.setPhotos(photos);
+            postService.addPost(postServiceModel, (Long) session.getAttribute("id"));
             modelAndView.setViewName("redirect:/allpost");
         } else {
             modelAndView.setViewName("redirect:/login");

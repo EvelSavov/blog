@@ -1,5 +1,9 @@
 package com.savov.blog.domain.model.binding;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
 public class PostBindingModel {
 
     private String title;
@@ -7,6 +11,9 @@ public class PostBindingModel {
     private String body;
 
     private String category;
+
+    private MultipartFile[] files;
+
 
 
     public PostBindingModel() {
@@ -34,5 +41,13 @@ public class PostBindingModel {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public MultipartFile[] getFiles() {
+        return files;
+    }
+
+    public void setFiles(MultipartFile[] files) {
+        this.files = files;
     }
 }

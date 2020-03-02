@@ -30,6 +30,8 @@ public class Post extends BaseEntity  {
 
     private List<Comment> comments;
 
+    private List<String> photos;
+
 
     public Post() {
     }
@@ -120,5 +122,15 @@ public class Post extends BaseEntity  {
 
     public void setDislike(List<User> dislike) {
         this.dislike = dislike;
+    }
+
+    @Column(name = "photos")
+    @ElementCollection(targetClass=String.class)
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
     }
 }

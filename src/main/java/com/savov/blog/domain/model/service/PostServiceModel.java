@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.savov.blog.domain.entities.Category;
 
 import com.savov.blog.domain.entities.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,8 @@ public class PostServiceModel {
     private String category;
 
     private List<CommentServiceModel> comments;
+
+    private List<String> photos;
 
 
     public PostServiceModel() {
@@ -114,5 +117,13 @@ public class PostServiceModel {
 
     public void setDislike(List<UserServiceModel> dislike) {
         this.dislike = dislike;
+    }
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
     }
 }
