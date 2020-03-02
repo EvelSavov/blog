@@ -125,4 +125,11 @@ public class PostServiceImpl implements PostService {
 
         return this.modelMapper.map(postRepository.save(post), PostServiceModel.class);
     }
+
+    @Override
+    public List<PostServiceModel> searchPost(String search) {
+        List<Post> posts = postRepository.findAll();
+        List<Post> collect = posts.stream().filter(p -> p.getTitle().contains(search)).collect(Collectors.toList());
+        return collect.stream().map(p -> this.modelMapper.map(p, PostServiceModel.class)).collect(Collectors.toList());
+    }
 }

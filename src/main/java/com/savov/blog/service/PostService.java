@@ -31,4 +31,5 @@ public interface PostService {
 
     PostServiceModel addDislike(Long postId, Long userId);
 
+    List<PostServiceModel> searchPost(String search);
 }

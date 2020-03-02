@@ -16,7 +16,7 @@
         <div class="card">
             <h5 class="card-header font-weight-bold" th:text="${post.title}"></h5>
             <div class="card-body">
-                <h5 class="card-title" th:text="${post.body}"></h5>
+                <h5 class="card-title" th:text="${post.body}" style="white-space: pre-wrap;"></h5>
                 <hr class="bg-blog hr-2"/>
                 <p class="card-text " th:text="${'Author ' + post.user.username}"></p>
                 <p class="card-text " th:text="${'Like ' + post.likeCount}"></p>

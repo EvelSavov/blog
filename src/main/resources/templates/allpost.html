@@ -10,6 +10,10 @@
     <div class="container text-center blog-container">
 
         <h1>All posts</h1>
+        <form class="form-inline my-2 my-lg-0" th:method="post" th:action="@{/search}">
+            <input class="form-control mr-sm-2" th:name="search" id="search" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-blog my-2 my-sm-0" type="submit">Search</button>
+        </form>
         <hr class="bg-blog hr-2"/>
 
         <th:block th:each="post:${posts}">

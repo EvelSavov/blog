@@ -43,6 +43,16 @@ public class PostController {
         return modelAndView;
     }
 
+    @PostMapping("/search")
+    public ModelAndView searchPost(@ModelAttribute("search") String search, ModelAndView modelAndView) {
+
+
+
+        modelAndView.addObject("posts", postService.searchPost(search));
+        modelAndView.setViewName("allpost");
+        return modelAndView;
+    }
+
     @GetMapping("/print/{id}")
     public ModelAndView getPostById(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
         if (session.getAttribute("username") != null) {
