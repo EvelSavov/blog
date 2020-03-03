@@ -9,7 +9,7 @@
 
     <div class="container text-center blog-container">
 
-        <h1>All posts</h1>
+        <h1 th:text="${'Posts by ' + posts[0].user.username }">All posts</h1>
         <form class="form-inline my-2 my-lg-0" th:method="post" th:action="@{/search}">
             <input class="form-control mr-sm-2" th:name="search" id="search" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-blog my-2 my-sm-0" type="submit">Search</button>
@@ -21,8 +21,8 @@
                 <h5 class="card-header font-weight-bold" th:text="${post.title}"></h5>
                 <div class="card-body">
                     <h5 class="card-title" th:text="${#strings.substring(post.body,0,50) + '...'}"></h5>
-                    <a th:href="@{/user/posts/{id}(id=${post.user.id})}"><p class="card-text" th:text="${'Author ' + post.user.username}"></p></a>
-<!--                    <p class="card-text " th:text="${'Author ' + post.user.username}"></p>-->
+<!--                    <a th:href="@{/user/{name}(name=${post.user.username})}"><p class="card-text" th:text="${'Author ' + post.user.username}"></p></a>-->
+<!--&lt;!&ndash;                    <p class="card-text " th:text="${'Author ' + post.user.username}"></p>&ndash;&gt;-->
                     <a th:href="@{/print/{id}(id=${post.id})}" class="btn btn-blog">Read post</a>
                 </div>
             </div>

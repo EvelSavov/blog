@@ -3,11 +3,13 @@ package com.savov.blog.web.controllers;
 import com.savov.blog.domain.entities.User;
 import com.savov.blog.domain.model.binding.UserLoginBindingModel;
 import com.savov.blog.domain.model.service.UserServiceModel;
+import com.savov.blog.service.PostService;
 import com.savov.blog.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,10 +20,13 @@ public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final PostService postService;
 
-    public UserController(UserService userService, ModelMapper modelMapper) {
+
+    public UserController(UserService userService, ModelMapper modelMapper, PostService postService) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.postService = postService;
     }
 
     @GetMapping("/login")
@@ -100,4 +105,20 @@ public class UserController {
         return modelAndView;
     }
 
+
+    @GetMapping("/user/posts/{id}")
+    public ModelAndView getProfile(@PathVariable(name = "id") Long id, ModelAndView modelAndView, HttpSession session) {
+        if (session.getAttribute("username") != null) {
+
+
+            modelAndView.addObject("posts", postService.getPostByUserId(id));
+            modelAndView.setViewName("user-posts");
+
+//            modelAndView.addObject("user", userService.getUserByUsername((String) session.getAttribute("username")));
+//            modelAndView.setViewName("profile");
+        } else {
+            modelAndView.setViewName("redirect:/login");
+        }
+        return modelAndView;
+    }
 }

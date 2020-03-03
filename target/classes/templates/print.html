@@ -53,13 +53,15 @@
             <th:block th:if="${#arrays.length(post.photos) > 0}">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2" ></li>
+                        <th:block th:each="photo, iter : ${post.photos}">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="${iter.index}" th:classappend="${iter.index == 0} ? ' active':''" ></li>
+                        </th:block>
+
+
                     </ol>
                     <div class="carousel-inner">
-                        <th:block th:each="photo  : ${post.photos}">
-                        <div class="carousel-item" th:if="${photo.index == 0}" active>
+                        <th:block th:each="photo, iter : ${post.photos}">
+                        <div class="carousel-item" th:classappend="${iter.index == 0} ? ' active':''" >
                             <img class="d-block w-100" th:src="@{'/photos/' +${photo}}" >
                         </div>
                         </th:block>

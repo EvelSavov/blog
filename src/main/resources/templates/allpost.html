@@ -21,7 +21,8 @@
                 <h5 class="card-header font-weight-bold" th:text="${post.title}"></h5>
                 <div class="card-body">
                     <h5 class="card-title" th:text="${#strings.substring(post.body,0,50) + '...'}"></h5>
-                    <p class="card-text " th:text="${'Author ' + post.user.username}"></p>
+                    <a th:href="@{/user/posts/{id}(id=${post.user.id})}"><p class="card-text" th:text="${'Author ' + post.user.username}"></p></a>
+<!--                    <p class="card-text " th:text="${'Author ' + post.user.username}"></p>-->
                     <a th:href="@{/print/{id}(id=${post.id})}" class="btn btn-blog">Read post</a>
                 </div>
             </div>
