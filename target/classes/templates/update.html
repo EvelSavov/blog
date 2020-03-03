@@ -48,6 +48,7 @@
 
             <div class="justify-content-center">
                 <button id="postBtn" type="submit" class="btn btn-blog">Update</button>
+                <button class="btn btn-blog" onclick="saveTextAsFile()">Save Text to File</button>
             </div>
 
 
@@ -59,4 +60,5 @@
 <th:block th:replace="fragments/footer"></th:block>
 </body>
 <script th:src="@{/js/postValidationScript.js}"></script>
+<script th:src="@{/js/addFiles.js}"></script>
 </html>
